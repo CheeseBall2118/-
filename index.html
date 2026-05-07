@@ -113,7 +113,7 @@
         let key = ""; 
         // 优先级逻辑判定
         if(kNum === 5) key = "BOSS";
-        else if(counts.love >= 3) key = "LOVE";
+        else if(counts.love >= 4) key = "LOVE";
         else if(counts.hunter >= 3) key = "HUNTER";
         else if(nfbSelectedCount === 2 && counts.nfb >= 2) key = "NFB";
         else if(chanCount >= 3) key = "CURIOUS";
