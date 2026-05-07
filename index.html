@@ -5,99 +5,117 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>DWTI 懂王人格测试 - 有点东西大会</title>
     <style>
-        :root { --dw-green: #00FF00; --bg-black: #050505; }
-        body { margin: 0; background: var(--bg-black); color: white; font-family: -apple-system, sans-serif; overflow-x: hidden; }
-        #app { max-width: 500px; margin: 0 auto; padding: 20px; min-height: 100vh; display: flex; flex-direction: column; justify-content: center; }
-        .progress { font-size: 14px; color: #666; margin-bottom: 10px; }
-        .question-box h2 { font-size: 24px; margin-bottom: 30px; line-height: 1.4; }
-        .option { 
-            background: #1a1a1a; border: 1px solid #333; padding: 15px 20px; 
-            margin-bottom: 15px; border-radius: 12px; cursor: pointer; transition: 0.2s;
-        }
-        .option:active { background: var(--dw-green); color: black; border-color: var(--dw-green); }
-        .result-page { text-align: center; display: none; }
-        .result-title { color: var(--dw-green); font-size: 32px; font-weight: bold; margin-bottom: 10px; }
-        .result-desc { color: #ccc; line-height: 1.6; font-size: 15px; text-align: left; background: #111; padding: 20px; border-radius: 15px; }
-        .btn-go { 
-            margin-top: 30px; background: var(--dw-green); color: black; 
-            padding: 15px 40px; border-radius: 30px; font-weight: bold; text-decoration: none; display: inline-block;
-        }
+        :root { --dw-green: #00FF00; --bg-black: #0a0a0a; }
+        body { margin: 0; background: var(--bg-black); color: white; font-family: -apple-system, "PingFang SC", sans-serif; }
+        #app { max-width: 500px; margin: 0 auto; padding: 25px; min-height: 100vh; display: flex; flex-direction: column; justify-content: center; }
+        .progress { font-size: 14px; color: #888; margin-bottom: 15px; letter-spacing: 1px; }
+        .q-box h2 { font-size: 22px; margin-bottom: 35px; line-height: 1.5; font-weight: 600; }
+        .opt { background: #1a1a1a; border: 1px solid #333; padding: 18px; margin-bottom: 15px; border-radius: 15px; cursor: pointer; transition: 0.2s; font-size: 16px; }
+        .opt:active { background: var(--dw-green); color: black; border-color: var(--dw-green); }
+        
+        /* 结果页样式 */
+        .res-page { display: none; text-align: center; animation: fadeIn 0.8s; }
+        .res-name { color: var(--dw-green); font-size: 32px; font-weight: 900; margin-bottom: 5px; }
+        .res-sub { color: #888; font-size: 14px; margin-bottom: 20px; }
+        .radar-box { background: #111; padding: 15px; border-radius: 15px; margin-bottom: 20px; text-align: left; font-size: 13px; }
+        .res-desc { text-align: left; line-height: 1.7; font-size: 15px; color: #ddd; background: #1a1a1a; padding: 20px; border-radius: 15px; border-left: 4px solid var(--dw-green); }
+        .footer-btn { margin-top: 30px; background: var(--dw-green); color: black; padding: 16px 40px; border-radius: 40px; font-weight: bold; text-decoration: none; display: inline-block; box-shadow: 0 10px 20px rgba(0,255,0,0.2); }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
     </style>
 </head>
 <body>
 
 <div id="app">
-    <div id="quiz-container">
-        <div class="progress" id="progress">Question 1 / 20</div>
-        <div class="question-box">
-            <h2 id="q-text">正在加载题目...</h2>
+    <div id="quiz-ui">
+        <div class="progress" id="progress">LOADING...</div>
+        <div class="q-box">
+            <h2 id="q-text"></h2>
             <div id="options"></div>
         </div>
     </div>
 
-    <div id="result-page" class="result-page">
-        <div class="result-title" id="res-name"></div>
-        <div id="res-icon" style="font-size: 60px; margin: 20px 0;"></div>
-        <div class="result-desc" id="res-desc"></div>
-        <a href="#" class="btn-go">5.16 来有点东西大会线下见</a>
+    <div id="res-ui" class="res-page">
+        <div class="res-name" id="res-name"></div>
+        <div class="res-sub" id="res-id"></div>
+        <div class="radar-box" id="res-radar"></div>
+        <div class="res-desc" id="res-desc"></div>
+        <a href="https://m.poizon.com" class="footer-btn">5.16-5.18 来有点东西大会现场</a>
     </div>
 </div>
 
 <script>
     const questions = [
-        { q: "另一半花3倍溢价买了个“漂亮破烂”还问你美不美？", options: ["咬碎后槽牙：美！买、得、好！", "恋爱可以谈，乱花钱忍不了，分！", "谢邀，寡王赚钱寡王花。"], type: "love" },
-        // ... 此处根据你的需求补充完整20道题
+        { q: "Q1. 另一半花3倍溢价买了个“漂亮破烂”还问你美不美？", opts: ["咬碎后槽牙：“美！买、得、好！”", "恋爱可以谈，乱花钱忍不了，分！", "谢邀，寡王赚钱寡王花。"], tag: "love" },
+        { q: "Q2. 玩鹅鸭杀被另一半贴脸开刀、疯狂背刺，你？", opts: ["我要开始用手玩了", "TA连刀我的时候都这么可爱", "在哪发能打游戏的对象"], tag: "love" },
+        { q: "Q3. 什么是海景谷？", opts: ["海边麦田特色地貌", "《我的世界》巨型仓库", "极稀少溢价飞天的周边"], correct: 2 },
+        { q: "Q4. 另一半送了你“极贵但巨丑”的礼物？", opts: ["送我就不错了", "下次直接折现转我支付宝", "你问我这种问题礼貌吗？"], tag: "strong" },
+        { q: "Q5. 发现另一半手机里有“私密相册”？", opts: ["不看保平安", "密码不交今晚别想睡", "小丑竟是我自己"], tag: "strong" },
+        { q: "Q6. 常说的“倒闭款”惨到什么程度？", opts: ["莆田工厂都懒得开模", "跌破发售价，黄牛亏本甩卖", "根本分不清爆款"], correct: 1 },
+        { q: "Q7. 五排生死局，另一半突然打电话求安慰？", opts: ["果断挂机！对象是心肝！", "手机免提：宝宝你怎么了", "挂断回微信：开团呢"], tag: "love" },
+        { q: "Q8. 撞见好兄弟的对象在外面跟别人牵手？", opts: ["直接拍照发他", "疯狂暗示他查岗", "关我屁事？别影响开黑"], tag: "chill" },
+        { q: "Q9. “买鞋热缩膜抽真空，供在墙上”你怎么看？", opts: ["纯纯大病，不穿等氧化吗？", "这叫流动的理财产品", "买不起，打扰了"], tag: "hunter" },
+        { q: "Q10. 遇到“我是学生，50块卖我（原价500）”的人？", opts: ["素质回复：不议价", "已读不回，直接拉黑", "反向折磨：我是孤儿倒贴50"], tag: "haha" },
+        { q: "Q11. 关于男人的“副驾座位”规矩是？", opts: ["老婆专属，亲妈坐后排", "谁先上车谁坐", "放绝版球衣，人都去后排"], tag: "strong" },
+        { q: "Q12. 兄弟买了个“土掉渣”挂件挂在限量包上？", opts: ["建议挂个脑科急诊", "土到极致就是潮", "恋爱脑发作，情侣款"], tag: "chill" },
+        { q: "Q13. 男生社交头像哪种最让你觉得“油腻”？", opts: ["豪车方向盘名表不露脸", "健身房对镜露腹肌内裤边", "非主流伤感动漫男头"], tag: "haha" },
+        { q: "Q14. “你这显卡能压住火光吗？”他其实在？", opts: ["担心你机箱着火", "询问玩《黑神话》顺不顺", "讽刺散热器声音大"], correct: 1 },
+        { q: "Q15. 抽盲盒时，“端盒”是指？", opts: ["两只手端着走", "整箱买断，暴力拆解", "空盲盒卖给收废品的"], correct: 1 },
+        { q: "Q16. 当你在路上偶遇库里，你会？", opts: ["当场唱跳库里之歌", "立马要合照签名", "老詹才是NBA真神"], tag: "haha" },
+        { q: "Q17. 什么是“重塑版（Restock/Retro）”？", opts: ["品牌补货", "换配色继续割", "材质细节比初代缩水"], correct: 2 },
+        { q: "Q18. 假如你穿越回 2000 年，你会？", opts: ["疯狂囤AJ11直接退休", "拉住马云一起玩", "购置地段房产躺赢"], tag: "hunter" },
+        { q: "Q19. 你什么时候会感叹「这有点东西」？", opts: ["队友预判了预判", "潮人兄弟给我爆改", "国足踢进世界杯决赛"], tag: "haha" },
+        { q: "Q20. 你觉得这套 DWTI 懂王测试怎么样？", opts: ["出题人多少带点大病", "有点东西，发给傻X室友", "哈哈关我屁事"], tag: "chill" }
     ];
 
-    const results = {
-        "BOSS": { name: "【满级懂王】BOSS", icon: "💎", desc: "你是鄙视链顶端的那个人。别人买鞋看款式，你买鞋看公差... 5.16 来线下唠到尽兴。" },
-        "DEAD-BRO": { name: "【活死人】DEAD-BRO", icon: "🗿", desc: "已然如雕像般心如止水。5.16 适合来有点东西小镇躺平公园睡一觉。" },
-        "HAHA": { name: "【赛博乐子人】HAHA", icon: "🤡", desc: "别人吵架你递刀，别人emo你倒立。5.16 重庆现场素材管够，等你整活。" }
+    const personals = {
+        "BOSS": { name: "【满级懂王】BOSS", id: "VERSION-MASTER", radar: "战力99|抗割99|逻辑90|情绪5|抽象10", desc: "你是鄙视链顶端的那个人。别人买鞋看款式，你买鞋看公差。你平时不多废话，但只要开口，全场都要拿小本本记笔记。5.16来得物有点东西大会线下，肯定能一见如故。" },
+        "DEAD": { name: "【活死人】DEAD-BRO", id: "CYBER-ZEN", radar: "战力50|抗割100|逻辑40|情绪0|抽象70", desc: "游戏输了不叫，鞋子涨了不买。你已然如雕像般心如止水，练就了顶级免伤。5月16日，适合来有点东西小镇躺平公园睡一觉，安静摆烂完全不用社交。" },
+        "LOVE": { name: "【满分恋爱佬】SOFT-BRO", id: "PURE-WARRIOR", radar: "战力80|抗割10|逻辑30|情绪95|抽象40", desc: "你是当代情场的一股清流。你的副驾是圣地，工资是贡品。为了陪TA逛街，你能把生死局队友全卖了。5.16带上对象一起来大会，氛围感拉满，奖励你一个月豁免权。" },
+        "HAHA": { name: "【赛博乐子人】HAHA", id: "JOKER-GOD", radar: "战力60|抗割60|逻辑30|情绪50|抽象100", desc: "别人吵架你递刀，别人emo你倒立。你是最高级的喜剧大师，也是永不冷场的抽象天花板。5.16重庆现场素材管够，你不去整活简直是浪费才华。" },
+        "FEAR": { name: "【老脸往哪哥】NO-FACE", id: "NEW-BRO", radar: "战力10|抗割20|逻辑10|情绪80|抽象50", desc: "知识题对你来说像天书。不是不聪明，是确实还没入坑。真到聚会吹水，你确实容易没地方搁。建议去有点东西大会突击补课，省得被开除Bro籍。" }
     };
 
-    let currentIndex = 0;
-    let scores = { knowledge: 0, chill: 0, love: 0 };
+    let idx = 0;
+    let kCount = 0;
+    let tags = { love: 0, chill: 0, haha: 0, strong: 0, hunter: 0 };
 
-    function renderQuestion() {
-        if (currentIndex >= questions.length) {
-            showResult();
-            return;
-        }
-        const q = questions[currentIndex];
-        document.getElementById('progress').innerText = `Question ${currentIndex + 1} / 20`;
-        document.getElementById('q-text').innerText = q.q;
-        const optionsDiv = document.getElementById('options');
-        optionsDiv.innerHTML = '';
-        q.options.forEach((opt, i) => {
-            const div = document.createElement('div');
-            div.className = 'option';
-            div.innerText = opt;
-            div.onclick = () => next(i);
-            optionsDiv.appendChild(div);
+    function render() {
+        if(idx >= 20) return result();
+        document.getElementById('progress').innerText = `STEP ${idx+1} / 20`;
+        document.getElementById('q-text').innerText = questions[idx].q;
+        const o = document.getElementById('options');
+        o.innerHTML = '';
+        questions[idx].opts.forEach((text, i) => {
+            const d = document.createElement('div');
+            d.className = 'opt';
+            d.innerText = text;
+            d.onclick = () => {
+                if(questions[idx].correct === i) kCount++;
+                if(questions[idx].tag) tags[questions[idx].tag]++;
+                idx++; render();
+            };
+            o.appendChild(d);
         });
     }
 
-    function next(optIndex) {
-        // 简化的逻辑判断：这里可以根据你提供的Q1-Q20逻辑进行细化
-        if (optIndex === 2) scores.chill++; 
-        currentIndex++;
-        renderQuestion();
+    function result() {
+        document.getElementById('quiz-ui').style.display = 'none';
+        document.getElementById('res-ui').style.display = 'block';
+        
+        let p = "HAHA"; // 默认乐子人
+        if(kCount === 5) p = "BOSS";
+        else if(kCount === 0) p = "FEAR";
+        else if(tags.love >= 3) p = "LOVE";
+        else if(tags.chill >= 2) p = "DEAD";
+
+        const res = personals[p];
+        document.getElementById('res-name').innerText = res.name;
+        document.getElementById('res-id').innerText = `# ${res.id}`;
+        document.getElementById('res-desc').innerText = res.desc;
+        document.getElementById('res-radar').innerHTML = res.radar.split('|').map(s => `<div>${s}</div>`).join('');
     }
 
-    function showResult() {
-        document.getElementById('quiz-container').style.display = 'none';
-        const resPage = document.getElementById('result-page');
-        resPage.style.display = 'block';
-        
-        // 简单示例逻辑：如果第三个选项选得多，就是活死人
-        let final = scores.chill > 0 ? "DEAD-BRO" : "BOSS";
-        
-        document.getElementById('res-name').innerText = results[final].name;
-        document.getElementById('res-icon').innerText = results[final].icon;
-        document.getElementById('res-desc').innerText = results[final].desc;
-    }
-
-    renderQuestion();
+    render();
 </script>
 </body>
 </html>
