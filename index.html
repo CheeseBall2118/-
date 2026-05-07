@@ -66,7 +66,7 @@
         { q: "Q17.【知识题】什么是“重塑版（Restock/Retro）”", opts: [{t:"A. 品牌良心发现，给老玩家补货", cat:"fear"}, {t:"B. 换个配色继续割，资本家榨干最后一点剩余价值", cat:"hunter curious"}, {t:"C. 经典回归，但材质和细节通常比初代缩水", isCorrect: true, cat:"stable"}] },
         { q: "Q18.【态度题】假如你穿越回 2000 年，你会选择：", opts: [{t:"A. 疯狂买入 AJ11乔治城，囤到今天直接退休", cat:"hunter"}, {t:"B. 在西湖边拉住马云，求他带我一起玩", cat:"curious"}, {t:"C. 倾尽所有购置核心地段房产，躺赢时代浪潮"}] },
         { q: "Q19.【态度题】你什么时候会忍不住感叹「这有点东西」：", opts: [{t:"A. 上分开黑，队友预判了对面的预判，这把稳了", cat:"stable"}, {t:"B. 潮人兄弟给我爆改，摇身一变成为第二个吴彦祖", cat:"strong"}, {t:"C. 国足踢进世界杯决赛——已经不是有点东西能解释的了", cat:"haha"}] },
-        { q: "Q20.【态度题】你觉得这套 DWTI 懂王测试怎么样？", opts: [{t:"A. 纯纯搞我心态"}, {t:"B. 有点东西，转发给室友"}, {t:"C. 哈哈关我屁事", cat:"nfb", isMustNfb: true}] } ];
+        { q: "Q20.【态度题】你觉得这套 DWTI 懂王测试怎么样？", opts: [{t:"A. 纯纯搞我心态"}, {t:"B. 有点东西，转发给室友"}, {t:"C. 哈哈关我屁事", cat:"nfb", isMustNfb: true}] } 
     ];
 
    const personals = {
@@ -94,7 +94,7 @@
     curious: 0, // 必须添加，对应 Q3, Q6, Q14, Q15, Q17, Q18 等
     fear: 0     // 必须添加，对应 Q3, Q6, Q14, Q15, Q17 等
 };
-    function render() {
+   function render() {
         if(idx >= 20) return showRes();
         document.getElementById('progress').innerText = `STEP ${idx+1} / 20`;
         const q = questions[idx];
@@ -118,9 +118,9 @@
                 idx++; 
                 render();
             };
-            op.appendChild(d); // 
+            op.appendChild(d); // 必须将选项加入页面容器
         });
-    } // 
+    }
 
     function showRes() {
     // 隐藏题目界面，显示结果界面
