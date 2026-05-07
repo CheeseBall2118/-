@@ -10,9 +10,28 @@
         #app { max-width: 500px; margin: 0 auto; padding: 25px; min-height: 100vh; display: flex; flex-direction: column; justify-content: center; }
         .progress { font-size: 12px; color: #666; margin-bottom: 15px; letter-spacing: 1px; font-family: monospace; }
         .q-box h2 { font-size: 20px; margin-bottom: 30px; line-height: 1.5; font-weight: bold; }
-        .opt { background: #111; border: 1px solid #222; padding: 18px; margin-bottom: 12px; border-radius: 12px; cursor: pointer; transition: 0.2s; font-size: 15px; line-height: 1.4; }
-        .opt:hover { border-color: var(--dw-green); }
-        .opt:active { background: var(--dw-green); color: black; font-weight: bold; }
+        
+        /* 基础选项样式 */
+        .opt { 
+            background: #111; 
+            border: 1px solid #222; 
+            padding: 18px; 
+            margin-bottom: 12px; 
+            border-radius: 12px; 
+            cursor: pointer; 
+            transition: background 0.1s, color 0.1s; 
+            font-size: 15px; 
+            line-height: 1.4; 
+        }
+
+        /* 选中后的视觉反馈 - 解决切换瞬间的残留问题 */
+        .opt.selected { 
+            background: var(--dw-green) !important; 
+            color: black !important; 
+            font-weight: bold; 
+            border-color: var(--dw-green);
+        }
+
         .res-page { display: none; text-align: center; animation: slideUp 0.6s ease-out; padding-bottom: 40px; }
         .res-name { color: var(--dw-green); font-size: 28px; font-weight: 900; margin-bottom: 5px; }
         .res-id { font-size: 18px; color: #fff; margin-bottom: 15px; font-style: italic; }
@@ -60,7 +79,7 @@
         { q: "Q10.【态度题】得物95分卖东西，遇到那种上来就说“我是学生，50块卖我行不行（原价500）”的人，你会：", opts:[{t:"A. 素质回复：“不好意思呢亲，不议价。”", cat:"hunter"}, {t:"B. 已读不回，直接拉黑", cat:"dead"}, {t:"C. 反向折磨：“我是孤儿，你倒贴 50 拿走吧。”", cat:"haha"}] },
         { q: "Q11.【态度题】关于男人的“副驾座位”，你的规矩是：", opts: [{t:"A. 除了老婆/女朋友，亲妈来了都得坐后排", cat:"love"}, {t:"B. 谁先上车谁坐，没有那么多规矩", cat:"nfb"}, {t:"C. 放我绝版球衣和外卖，人都给我去挤后排", cat:"strong"}] },
         { q: "Q12.【态度题】潮人兄弟买了个“土掉渣”挂件挂在限量包上，你觉得他：", opts: [{t:"A. 审美突发性休克，建议挂个脑科急诊", cat:"haha"}, {t:"B. 返璞归真，土到极致就是潮，大俗即大雅", cat:"stable"}, {t:"C. 恋爱脑发作，和对象挂的情侣款"}] },
-        { q: "Q13.【态度题】男生在社交软件上的头像，哪种最让你觉得“油腻”？", opts: [{t:"A. 坐在豪车方向盘前，露出名表的不露脸照片"}, {t:"B.健身房对镜自拍，故意掀起衣服露出八块腹肌和半条内裤边"}, {t:"C. 纯黑的背景，或者一张极其非主流的伤感动漫男头"}] },
+        { q: "Q13.【态度题】男生在社交软件上的头像，哪种最让你觉得“油腻”？", opts: [{t:"A. 坐在豪车方向盘前，露出名表的不露脸照片"}, {t:"B.健身房对镜自拍，故意掀起衣服露出八块肌和半条内裤边"}, {t:"C. 纯黑的背景，或者一张极其非主流的伤感动漫男头"}] },
         { q: "Q14.【知识题】当一个Bro对着你的新电脑感叹“你这显卡能压住火光吗？”，他其实在：", opts: [{t:"A. 担心你的机箱着火，建议你赶紧买个灭火器", cat:"curious"}, {t:"B. 询问你玩《黑神话：悟空》这种吃配置的大作顺不顺", isCorrect: true, cat:"stable"}, {t:"C. 讽刺你的散热器声音太大，像直升机起飞", cat:"fear"}] },
         { q: "Q15.【知识题】抽盲盒时，所谓的“端盒”是指：", opts: [{t:"A. 这一盒太重了，得用两只手端着走", cat:"curious"}, {t:"B. 既然抽不到隐藏，索性整箱买断，暴力拆解", isCorrect: true, cat:"hunter stable"}, {t:"C. 把空的盲盒卖给收废品的，主打一个回血", cat:"fear"}] },
         { q: "Q16.【态度题】当你在路上偶遇库里，你会：", opts:[{t:"A. 当场给他在路边唱跳库里之歌，库里库里库里库里……", cat:"haha"}, {t:"B. 立马要合照签名，反手发到朋友圈，这波面子拉满", cat:"strong"}, {t:"C. 库里算什么，老詹才是NBA唯一真神"}] },
@@ -74,7 +93,7 @@
         "BOSS": { name: "【满级懂王】BOSS", id: "BOSS", icon: "💎", tags: "#版本答案 #公差判官 #圈内活百科", desc: "你是鄙视链顶端的那个人。别人买鞋看款式，你买鞋看公差；别人打游戏看输赢，你打游戏看系统代码。你平时不多废话，但只要开口，全场都要停下来拿小本本记笔记，唯有牛币才能代表你。你这么懂圈内门道的人，5.16来得物有点东西大会线下，肯定能和各路大神一见如故、唠到尽兴。" },
         "DEAD": { name: "【活死人】DEAD-BRO", id: "DEAD-BRO", icon: "🗿", tags: "#情绪免伤100% #赛博兵马俑 #已老实", desc: "游戏输了不叫，鞋子涨了不买，对象分了不哭。你已然如雕像般心如止水、无欲无求，提前步入了“赛博禅宗”，练就了顶级免伤。这该死的松弛感，是你在这个暴躁世界里唯一的重装铠甲。5月16日，适合来得物有点东西小镇躺平公园睡一觉，安静摆烂完全不用被迫社交。" },
         "STABLE": { name: "【稳稳帝】STABLE-KING", id: "STABLE-KING", icon: "📿", tags: "#你猜我懂多少 #不慌 #这才是真含金量", desc: "什么圈都懂一点，什么问题都不急着站队。你像木鱼一样通透寡言、内敛自持，你的判断有自己的逻辑，不屑跟喷子浪费口舌。这种人在任何圈子都能混，但没人知道你到底是什么段位。5.16这种全能局，没你去重庆有点东西大会Carry真的不行。" },
-        "LOVE": { name: "【满分恋爱佬】SOFT-BRO", id: "SOFT-BRO", icon: "🐶", tags: "#纯爱战神 #纸老虎 #忠犬型伴侣", desc: "你是濒危物种，是当代情场的一股清流。你是世俗口中的舔狗，但只有你知道这种专一到极致的幸福。你的副驾是圣地，你的工资是贡品。你的人生圆心就是另一半，为了陪TA逛街，你能把生死局的队友全卖了。虽然在五排群里你被喷成筛子，但看到TA一个微笑，你觉得这后槽牙咬碎了也值。周末约会选不到好地方？5.16带上对象一起来得物有点东西大会，打卡出片，氛围感直接拉满，这不奖励你一个豁免权？" },
+        "LOVE": { name: "【满分恋爱佬】SOFT-BRO", id: "SOFT-BRO", icon: "🐶", tags: "#纯爱战神 #纸老虎 #忠犬型伴侣", desc: "你是濒危物种，是当代情场的一股清流。你是世俗口中的舔狗，但只有你知道这种专一到极致的幸福。你的副驾是圣地，你的工资是贡品。你的人生圆心就是另一半，为了陪TA逛街，你能把生死局的队友全卖了。虽然在五排群里你被喷成筛子，但看到TA一个微笑，你觉得这后槽牙咬碎了也值。周末约会选不到好地方？5.16带上对象一起来得物有点东西大会，打卡出片，氛围感直接拉满，这不奖励你一个月豁免权？" },
         "NFB": { name: "【屁事哥】NFB", id: "NFB", icon: "🍹", tags: "#关我屁事 #但我测完了 #佛系路人甲", desc: "全程抱着看热闹心态做题，妥妥吃瓜无辜路人甲。这套题和你没关系，但你测完了——这才是最离谱的事。你不是不懂，只是这些事跟你的人生轨迹暂时没有交集，或者你懒得掺合。主打一个随缘看戏没事干，5.16不如来有点东西大会线下溜达一圈，不参与讨论，只负责站在第一线吃最热乎的瓜。" },
         "FEAR": { name: "【老脸往哪哥】NO-FACE", id: "NO-FACE", icon: "🤦", tags: "#学费还没交完 #真性情不装 #待解锁新人", desc: "知识题对你来说像天书。不是不聪明，就是这些圈子你确实没入坑。好在虽然知识点是盲区，但你态度挺真实，主打一个真性情不装杯。但说真的，真到聚会吹水，你确实容易老脸没地方搁。5.16建议去重庆有点东西大会突击补课，省得被朋友开除Bro籍。" },
         "HUNTER": { name: "【全职猎人】HUNTER", id: "HUNTER", icon: "🎯", tags: "#理财鬼才 #限量猎手 #不做韭菜", desc: "你深谙薅羊毛之道，对你来说蹲捡漏就像买彩票坐等惊喜开奖。你对价格的敏感度堪比华尔街操盘手，在得物蹲点不是为了消费，是为了等那个标错价的慈善卖家。你的人生终极奥义是：用最低的成本装最大的杯。在你的字典里，原价购买等于智商税。5.16得物有点东西大会现场尖货不少，懂行情、会捡漏的你千万别错过，懂的都懂。" },
@@ -84,11 +103,15 @@
     };
 
     let idx = 0, kNum = 0, nfbMustCount = 0;
-    let counts = { love:0, dead:0, haha:0, strong:0, hunter:0, nfb:0, stable:0, curious:0, fear:0 };
+    let counts = { love: 0, dead: 0, haha: 0, strong: 0, hunter: 0, nfb: 0, stable: 0, curious: 0, fear: 0 };
 
     function render() {
         if(idx >= 20) return showRes();
+        
+        const ui = document.getElementById('quiz-ui');
+        ui.style.display = 'block';
         document.getElementById('progress').innerText = `STEP ${idx+1} / 20`;
+        
         const q = questions[idx];
         document.getElementById('q-text').innerText = q.q;
         const op = document.getElementById('options'); 
@@ -96,20 +119,29 @@
         
         q.opts.forEach((opt) => {
             const d = document.createElement('div'); 
-            d.className='opt'; 
+            d.className = 'opt'; 
             d.innerText = opt.t;
+            
             d.onclick = () => {
+                // 1. 立即反馈选中状态
+                d.classList.add('selected');
+
+                // 2. 逻辑计数
                 if (opt.cat) {
                     opt.cat.split(' ').forEach(c => { if(c) counts[c]++ });
                 }
                 if (opt.isCorrect) kNum++;
                 if (opt.isMustNfb) nfbMustCount++;
                 idx++;
-                render();
+
+                // 3. 延迟一拍（250ms）再渲染下一题，保证用户看到选中效果
+                setTimeout(() => {
+                    render();
+                }, 250);
             };
             op.appendChild(d);
         });
-        window.scrollTo(0,0);
+        window.scrollTo(0, 0);
     }
 
     function showRes() {
@@ -118,7 +150,6 @@
         ui.style.display = 'block';
 
         let key = "";
-        // 逻辑判别
         if (kNum === 5) key = "BOSS";
         else if (nfbMustCount === 2) key = "NFB";
         else if (counts.love >= 4) key = "LOVE";
@@ -137,7 +168,6 @@
 
         const p = personals[key] || personals["STABLE"];
 
-        // 动态数值
         const dynamicR = [
             Math.min(kNum * 18 + 10 + (counts.strong * 2), 100),
             Math.min(counts.hunter * 20 + (kNum * 8), 100),
@@ -160,6 +190,7 @@
         `).join('');
         window.scrollTo(0, 0);
     }
+    
     render();
 </script>
 </body>
