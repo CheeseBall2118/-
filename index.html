@@ -11,6 +11,7 @@
         .progress { font-size: 12px; color: #666; margin-bottom: 15px; letter-spacing: 1px; font-family: monospace; }
         .q-box h2 { font-size: 20px; margin-bottom: 30px; line-height: 1.5; font-weight: bold; }
         .opt { background: #111; border: 1px solid #222; padding: 18px; margin-bottom: 12px; border-radius: 12px; cursor: pointer; transition: 0.2s; font-size: 15px; line-height: 1.4; }
+        .opt:hover { border-color: var(--dw-green); }
         .opt:active { background: var(--dw-green); color: black; font-weight: bold; }
         .res-page { display: none; text-align: center; animation: slideUp 0.6s ease-out; padding-bottom: 40px; }
         .res-name { color: var(--dw-green); font-size: 28px; font-weight: 900; margin-bottom: 5px; }
@@ -47,7 +48,7 @@
 
 <script>
     const questions = [
-        { q: "Q1.【两性题】另一半花3倍溢价买了个“漂亮破烂”还问你美不美，你会：", opts: [{t:"A. 咬碎后槽牙：“美！买、得、好！”}, {t:"B. 恋爱可以谈，乱花钱忍不了，分！"}, {t:"C. 谢邀，寡王赚钱寡王花，根本没这种烦恼。", cat:"dead"}] },
+        { q: "Q1.【两性题】另一半花3倍溢价买了个“漂亮破烂”还问你美不美，你会：", opts: [{t:"A. 咬碎后槽牙：“美！买、得、好！”"}, {t:"B. 恋爱可以谈，乱花钱忍不了，分！"}, {t:"C. 谢邀，寡王赚钱寡王花，根本没这种烦恼。", cat:"dead"}] },
         { q: "Q2.【两性题】玩鹅鸭杀被另一半贴脸开刀、疯狂背刺，你：", opts: [{t:"A. 起身坐起来，并说：我要开始用手玩了"}, {t:"B. 嘿嘿，TA连刀我的时候都这么可爱", cat:"love"}, {t:"C. 慕了，在哪发能一起打游戏的对象"}] },
         { q: "Q3.【知识题】什么是海景谷？", opts:[{t:"A. 海边麦田形成的风吹麦浪特色地貌", cat:"fear"}, {t:"B. 《我的世界》大佬在海边挖的巨型仓库", cat:"curious"}, {t:"C. 极稀少、溢价飞天的顶级周边", isCorrect: true, cat:"stable"}] },
         { q: "Q4.【两性题】另一半送了你“极贵但巨丑”的生日礼物，你会：", opts:[{t:"A. 还要啥自行车？送我就不错了", cat:"love"}, {t:"B. 下次直接折现转我支付宝行不行", cat:"strong"}, {t:"C. 你问我这种问题？礼貌吗？"}] },
@@ -70,31 +71,22 @@
     ];
 
    const personals = {
-        "BOSS": { name: "【满级懂王】BOSS", id: "BOSS", icon: "💎", r: [99,99,90,5,10], tags: "#版本答案 #公差判官 #圈内活百科", desc: "你是鄙视链顶端的那个人。别人买鞋看款式，你买鞋看公差；别人打游戏看输赢，你打游戏看系统代码。你平时不多废话，但只要开口，全场都要停下来拿小本本记笔记，唯有牛币才能代表你。你这么懂圈内门道的人，5.16来得物有点东西大会线下，肯定能和各路大神一见如故、唠到尽兴。" },
-        "DEAD": { name: "【活死人】DEAD-BRO", id: "DEAD-BRO", icon: "🗿", r: [50,100,40,0,70], tags: "#情绪免伤100% #赛博兵马俑 #已老实", desc: "游戏输了不叫，鞋子涨了不买，对象分了不哭。你已然如雕像般心如止水、无欲无求，提前步入了“赛博禅宗”，练就了顶级免伤。这该死的松弛感，是你在这个暴躁世界里唯一的重装铠甲。5月16日，适合来得物有点东西小镇躺平公园睡一觉，安静摆烂完全不用被迫社交。" },
-        "STABLE": { name: "【稳稳帝】STABLE-KING", id: "STABLE-KING", icon: "📿", r: [80,70,80,30,50], tags: "#你猜我懂多少 #不慌 #这才是真含金量", desc: "什么圈都懂一点，什么问题都不急着站队。你像木鱼一样通透寡言、内敛自持，你的判断有自己的逻辑，不屑跟喷子浪费口舌。这种人在任何圈子都能混，但没人知道你到底是什么段位。5.16这种全能局，没你去重庆有点东西大会Carry真的不行。" },
-        "LOVE": { name: "【满分恋爱佬】SOFT-BRO", id: "SOFT-BRO", icon: "🐶", r: [80,10,30,95,40], tags: "#纯爱战神 #纸老虎 #忠犬型伴侣", desc: "你是濒危物种，是当代情场的一股清流。你是世俗口中的舔狗，但只有你知道这种专一到极致的幸福。你的副驾是圣地，你的工资是贡品。你的人生圆心就是另一半，为了陪TA逛街，你能把生死局的队友全卖了。虽然在五排群里你被喷成筛子，但看到TA一个微笑，你觉得这后槽牙咬碎了也值。周末约会选不到好地方？5.16带上对象一起来得物有点东西大会，打卡出片，氛围感直接拉满，这不奖励你一个月豁免权？" },
-        "NFB": { name: "【屁事哥】NFB", id: "NFB", icon: "🍹", r: [40,90,40,10,60], tags: "#关我屁事 #但我测完了 #佛系路人甲", desc: "全程抱着看热闹心态做题，妥妥吃瓜无辜路人甲。这套题和你没关系，但你测完了——这才是最离谱的事。你不是不懂，只是这些事跟你的人生轨迹暂时没有交集，或者你懒得掺合。主打一个随缘看戏没事干，5.16不如来有点东西大会线下溜达一圈，不参与讨论，只负责站在第一线吃最热乎的瓜。" },
-        "FEAR": { name: "【老脸往哪哥】NO-FACE", id: "NO-FACE", icon: "🤦", r: [10,20,10,80,50], tags: "#学费还没交完 #真性情不装 #待解锁新人", desc: "知识题对你来说像天书。不是不聪明，就是这些圈子你确实没入坑。好在虽然知识点是盲区，但你态度挺真实，主打一个真性情不装杯。但说真的，真到聚会吹水，你确实容易老脸没地方搁。5.16建议去重庆有点东西大会突击补课，省得被朋友开除Bro籍。" },
-        "HUNTER": { name: "【全职猎人】HUNTER", id: "HUNTER", icon: "🎯", r: [85,100,85,20,30], tags: "#理财鬼才 #限量猎手 #不做韭菜", desc: "你深谙薅羊毛之道，对你来说蹲捡漏就像买彩票坐等惊喜开奖。你对价格的敏感度堪比华尔街操盘手，在得物蹲点不是为了消费，是为了等那个标错价的慈善卖家。你的人生终极奥义是：用最低的成本装最大的杯。在你的字典里，原价购买等于智商税。5.16得物有点东西大会现场尖货不少，懂行情、会捡漏的你千万别错过，懂的都懂。" },
-        "CURIOUS": { name: "【大馋小子】CURIOUS-GUY", id: "CURIOUS-GUY", icon: "🍲", r: [65,40,60,80,90], tags: "#大馋小子 #什么都想搞清楚 #永远在发现新东西", desc: "你的关注列表里什么都有：从盲盒、球鞋到大佬的创业史。你不是没重点，你只是对这世界充满了“大馋小子”式的探索欲，什么新鲜好玩的都绝不落下，哪里有新奇玩意儿哪里就有你。5.16这种什么都有、啥都好玩的有点东西大会，简直就是为你量身定做的“自助餐大餐”。" },
-        "HAHA": { name: "【赛博乐子人】HAHA", id: "HAHA", icon: "🤸", r: [60,60,30,50,100], tags: "#乐子人 #整活大师 #抽象天花板", desc: "别人吵架你递刀，别人emo你倒立。你是最高级的喜剧大师，也是朋友聚会里永不冷场的抽象天花板。在这个无聊的世界，你主打一个无差别攻击。只要场子够乱，你就是那个最优雅的指挥家。5.16重庆有点东西大会现场素材管够，你不去整活简直是浪费才华。" },
-        "STRONG": { name: "【Strong哥】STRONGER", id: "STRONGER", icon: "🕶️", r: [75,50,60,40,50], tags: "#面子至上 #嘴硬心软 #硬核Bro", desc: "你把面子刻在骨子里，天生自带strong属性。撞见兄弟对象出轨你会疯狂暗示，恋爱受了委屈也绝不低头。你发的朋友圈总是若隐若现地露出logo，虽然内心慌得一批，但表面稳如老狗。你这种人，连睡觉都得穿着最帅的那套睡衣。论怎么装才最有面，来得物有点东西大会随手赢限量款大奖，包你轻松帅出圈。" }
+        "BOSS": { name: "【满级懂王】BOSS", id: "BOSS", icon: "💎", tags: "#版本答案 #公差判官 #圈内活百科", desc: "你是鄙视链顶端的那个人。别人买鞋看款式，你买鞋看公差；别人打游戏看输赢，你打游戏看系统代码。你平时不多废话，但只要开口，全场都要停下来拿小本本记笔记，唯有牛币才能代表你。你这么懂圈内门道的人，5.16来得物有点东西大会线下，肯定能和各路大神一见如故、唠到尽兴。" },
+        "DEAD": { name: "【活死人】DEAD-BRO", id: "DEAD-BRO", icon: "🗿", tags: "#情绪免伤100% #赛博兵马俑 #已老实", desc: "游戏输了不叫，鞋子涨了不买，对象分了不哭。你已然如雕像般心如止水、无欲无求，提前步入了“赛博禅宗”，练就了顶级免伤。这该死的松弛感，是你在这个暴躁世界里唯一的重装铠甲。5月16日，适合来得物有点东西小镇躺平公园睡一觉，安静摆烂完全不用被迫社交。" },
+        "STABLE": { name: "【稳稳帝】STABLE-KING", id: "STABLE-KING", icon: "📿", tags: "#你猜我懂多少 #不慌 #这才是真含金量", desc: "什么圈都懂一点，什么问题都不急着站队。你像木鱼一样通透寡言、内敛自持，你的判断有自己的逻辑，不屑跟喷子浪费口舌。这种人在任何圈子都能混，但没人知道你到底是什么段位。5.16这种全能局，没你去重庆有点东西大会Carry真的不行。" },
+        "LOVE": { name: "【满分恋爱佬】SOFT-BRO", id: "SOFT-BRO", icon: "🐶", tags: "#纯爱战神 #纸老虎 #忠犬型伴侣", desc: "你是濒危物种，是当代情场的一股清流。你是世俗口中的舔狗，但只有你知道这种专一到极致的幸福。你的副驾是圣地，你的工资是贡品。你的人生圆心就是另一半，为了陪TA逛街，你能把生死局的队友全卖了。虽然在五排群里你被喷成筛子，但看到TA一个微笑，你觉得这后槽牙咬碎了也值。周末约会选不到好地方？5.16带上对象一起来得物有点东西大会，打卡出片，氛围感直接拉满，这不奖励你一个豁免权？" },
+        "NFB": { name: "【屁事哥】NFB", id: "NFB", icon: "🍹", tags: "#关我屁事 #但我测完了 #佛系路人甲", desc: "全程抱着看热闹心态做题，妥妥吃瓜无辜路人甲。这套题和你没关系，但你测完了——这才是最离谱的事。你不是不懂，只是这些事跟你的人生轨迹暂时没有交集，或者你懒得掺合。主打一个随缘看戏没事干，5.16不如来有点东西大会线下溜达一圈，不参与讨论，只负责站在第一线吃最热乎的瓜。" },
+        "FEAR": { name: "【老脸往哪哥】NO-FACE", id: "NO-FACE", icon: "🤦", tags: "#学费还没交完 #真性情不装 #待解锁新人", desc: "知识题对你来说像天书。不是不聪明，就是这些圈子你确实没入坑。好在虽然知识点是盲区，但你态度挺真实，主打一个真性情不装杯。但说真的，真到聚会吹水，你确实容易老脸没地方搁。5.16建议去重庆有点东西大会突击补课，省得被朋友开除Bro籍。" },
+        "HUNTER": { name: "【全职猎人】HUNTER", id: "HUNTER", icon: "🎯", tags: "#理财鬼才 #限量猎手 #不做韭菜", desc: "你深谙薅羊毛之道，对你来说蹲捡漏就像买彩票坐等惊喜开奖。你对价格的敏感度堪比华尔街操盘手，在得物蹲点不是为了消费，是为了等那个标错价的慈善卖家。你的人生终极奥义是：用最低的成本装最大的杯。在你的字典里，原价购买等于智商税。5.16得物有点东西大会现场尖货不少，懂行情、会捡漏的你千万别错过，懂的都懂。" },
+        "CURIOUS": { name: "【大馋小子】CURIOUS-GUY", id: "CURIOUS-GUY", icon: "🍲", tags: "#大馋小子 #什么都想搞清楚 #永远在发现新东西", desc: "你的关注列表里什么都有：从盲盒、球鞋到大佬的创业史。你不是没重点，你只是对这世界充满了“大馋小子”式的探索欲，什么新鲜好玩的都绝不落下，哪里有新奇玩意儿哪里就有你。5.16这种什么都有、啥都好玩的有点东西大会，简直就是为你量身定做的“自助餐大餐”。" },
+        "HAHA": { name: "【赛博乐子人】HAHA", id: "HAHA", icon: "🤸", tags: "#乐子人 #整活大师 #抽象天花板", desc: "别人吵架你递刀，别人emo你倒立。你是最高级的喜剧大师，也是朋友聚会里永不冷场的抽象天花板。在这个无聊的世界，你主打一个无差别攻击。只要场子够乱，你就是那个最优雅的指挥家。5.16重庆有点东西大会现场素材管够，你不去整活简直是浪费才华。" },
+        "STRONG": { name: "【Strong哥】STRONGER", id: "STRONGER", icon: "🕶️", tags: "#面子至上 #嘴硬心软 #硬核Bro", desc: "你把面子刻在骨子里，天生自带strong属性。撞见兄弟对象出轨你会疯狂暗示，恋爱受了委屈也绝不低头。你发的朋友圈总是若隐若现地露出logo，虽然内心慌得一批，但表面稳如老狗。你这种人，连睡觉都得穿着最帅的那套睡衣。论怎么装才最有面，来得物有点东西大会随手赢限量款大奖，包你轻松帅出圈。" }
     };
 
-   let idx = 0, kNum = 0, nfbMustCount = 0;
-    let counts = { 
-    love: 0, 
-    dead: 0, 
-    haha: 0, 
-    strong: 0, 
-    hunter: 0, 
-    nfb: 0, 
-    stable: 0, 
-    curious: 0, // 必须添加，对应 Q3, Q6, Q14, Q15, Q17, Q18 等
-    fear: 0     // 必须添加，对应 Q3, Q6, Q14, Q15, Q17 等
-};
-   function render() {
+    let idx = 0, kNum = 0, nfbMustCount = 0;
+    let counts = { love:0, dead:0, haha:0, strong:0, hunter:0, nfb:0, stable:0, curious:0, fear:0 };
+
+    function render() {
         if(idx >= 20) return showRes();
         document.getElementById('progress').innerText = `STEP ${idx+1} / 20`;
         const q = questions[idx];
@@ -102,123 +94,73 @@
         const op = document.getElementById('options'); 
         op.innerHTML = '';
         
-        q.opts.forEach((opt, i) => {
+        q.opts.forEach((opt) => {
             const d = document.createElement('div'); 
             d.className='opt'; 
             d.innerText = opt.t;
             d.onclick = () => {
                 if (opt.cat) {
-                    const cats = opt.cat.split(' ');
-                    cats.forEach(c => {
-                        if (c) counts[c] = (counts[c] || 0) + 1;
-                    });
+                    opt.cat.split(' ').forEach(c => { if(c) counts[c]++ });
                 }
                 if (opt.isCorrect) kNum++;
                 if (opt.isMustNfb) nfbMustCount++;
-                idx++; 
+                idx++;
                 render();
             };
-            op.appendChild(d); // 必须将选项加入页面容器
+            op.appendChild(d);
         });
+        window.scrollTo(0,0);
     }
 
     function showRes() {
-    // 隐藏题目界面，显示结果界面
-    document.getElementById('quiz-ui').style.display = 'none';
-    const ui = document.getElementById('res-ui');
-    ui.style.display = 'block';
+        document.getElementById('quiz-ui').style.display = 'none';
+        const ui = document.getElementById('res-ui');
+        ui.style.display = 'block';
 
-    let key = "";
+        let key = "";
+        // 逻辑判别
+        if (kNum === 5) key = "BOSS";
+        else if (nfbMustCount === 2) key = "NFB";
+        else if (counts.love >= 4) key = "LOVE";
+        else if (counts.fear >= 3) key = "FEAR";
 
-    // --- 第一阶段：优先级拦截 (硬核/特定人群) ---
-    
-    if (kNum === 5) {
-        // 1. 满级懂王：优先级最高，五道知识题全对直接封王
-        key = "BOSS";
-    } 
-    else if (nfbMustCount === 2) {
-        // 2. 屁事哥：Q8和Q20必选C，判定优先级极高
-        key = "NFB";
-    } 
-    else if (counts.love >= 4) {
-        // 3. 恋爱佬：判定条件设为4，作为稀有硬核人格拦截
-        key = "LOVE";
-    }
-    else if (counts.fear >= 3) {
-        // 4. 老脸往哪哥：知识题选错太多，优先判定
-        key = "FEAR";
-    }
-
-    // --- 第二阶段：性格比大小 (主流人格均衡区) ---
-
-    if (key === "") {
-        // 定义参与竞争的性格分类
-        const candidates = ["hunter", "strong", "haha", "curious", "dead"];
-        
-        // 找出得分最高的性格
-        let maxVal = 0;
-        let winner = "";
-        
-        candidates.forEach(c => {
-            if (counts[c] > maxVal) {
-                maxVal = counts[c];
-                winner = c.toUpperCase();
-            }
-        });
-
-        // 只有最高分达到一定程度（比如3分）才触发性格结果
-        if (maxVal >= 3) {
-            key = winner;
-        } 
-        // --- 第三阶段：兜底判定 (平庸/稳重区) ---
-        else if (kNum >= 3 || counts.stable >= 4) {
-            // 知识及格或者选了很多稳重选项
-            key = "STABLE";
-        } 
-        else {
-            // 如果什么分都很低，根据知识对错情况收尾
-            key = kNum === 0 ? "FEAR" : "DEAD";
+        if (key === "") {
+            const candidates = ["hunter", "strong", "haha", "curious", "dead"];
+            let maxVal = 0, winner = "";
+            candidates.forEach(c => {
+                if (counts[c] > maxVal) { maxVal = counts[c]; winner = c.toUpperCase(); }
+            });
+            if (maxVal >= 3) key = winner;
+            else if (kNum >= 3 || counts.stable >= 4) key = "STABLE";
+            else key = kNum === 0 ? "FEAR" : "DEAD";
         }
+
+        const p = personals[key] || personals["STABLE"];
+
+        // 动态数值
+        const dynamicR = [
+            Math.min(kNum * 18 + 10 + (counts.strong * 2), 100),
+            Math.min(counts.hunter * 20 + (kNum * 8), 100),
+            Math.min(counts.stable * 15 + (kNum * 10), 100),
+            Math.max(Math.min(counts.love * 25 - (counts.dead + nfbMustCount) * 15 + 40, 100), 5),
+            Math.min(counts.haha * 20 + nfbMustCount * 25, 100)
+        ];
+        const labels = ["战力", "抗割", "逻辑", "情绪", "抽象"];
+
+        document.getElementById('res-icon').innerText = p.icon;
+        document.getElementById('res-name').innerText = p.name;
+        document.getElementById('res-id').innerText = p.id;
+        document.getElementById('res-tags').innerText = p.tags;
+        document.getElementById('res-desc').innerText = p.desc;
+        document.getElementById('res-radar').innerHTML = dynamicR.map((v, i) => `
+            <div class="radar-item">
+                <span class="radar-val">${v}</span>
+                <span class="radar-label">${labels[i]}</span>
+            </div>
+        `).join('');
+        window.scrollTo(0, 0);
     }
-
-    // 获取对应的人格配置数据
-    const p = personals[key] || personals["STABLE"];
-
-    // --- 第四阶段：动态雷达数值运算 (让结果页的数值各不相同) ---
-    // 逻辑顺序：[战力, 抗割, 逻辑, 情绪, 抽象]
-    
-    // 战力：主要看知识题正确数
-    const power = Math.min(kNum * 18 + 10 + (counts.strong * 2), 100); 
-    // 抗割：看理财猎人得分 + 知识储备
-    const antiScam = Math.min(counts.hunter * 20 + (kNum * 8), 100);
-    // 逻辑：稳重得分 + 知识储备
-    const logic = Math.min(counts.stable * 15 + (kNum * 10), 100);
-    // 情绪：恋爱得分 - 活死人/屁事得分
-    const emotion = Math.max(Math.min(counts.love * 25 - (counts.dead + nfbMustCount) * 15 + 40, 100), 5);
-    // 抽象：乐子得分 + 屁事行为
-    const abstract = Math.min(counts.haha * 20 + nfbMustCount * 25, 100);
-
-    const dynamicR = [power, antiScam, logic, emotion, abstract];
-    const labels = ["战力", "抗割", "逻辑", "情绪", "抽象"];
-
-    // --- 第五阶段：页面渲染 ---
-    document.getElementById('res-icon').innerText = p.icon;
-    document.getElementById('res-name').innerText = p.name;
-    document.getElementById('res-id').innerText = p.id;
-    document.getElementById('res-tags').innerText = p.tags;
-    document.getElementById('res-desc').innerText = p.desc;
-    
-    // 渲染雷达图数值
-    document.getElementById('res-radar').innerHTML = dynamicR.map((v, i) => `
-        <div class="radar-item">
-            <span class="radar-val">${v}</span>
-            <span class="radar-label">${labels[i]}</span>
-        </div>
-    `).join('');
-
-    // 回到页面顶部
-    window.scrollTo(0, 0);
-}
-    render(); // 
-
+    render();
 </script>
+</body>
+</html>
