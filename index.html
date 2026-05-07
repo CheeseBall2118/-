@@ -3,24 +3,24 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DWTI 懂王人格测试 - 有点东西大会</title>
+    <title>DWTI 懂王测试 - 有点东西大会</title>
     <style>
-        :root { --dw-green: #00FF00; --bg-black: #0a0a0a; }
-        body { margin: 0; background: var(--bg-black); color: white; font-family: -apple-system, "PingFang SC", sans-serif; }
+        :root { --dw-green: #00FF00; --bg-black: #050505; }
+        body { margin: 0; background: var(--bg-black); color: white; font-family: -apple-system, "PingFang SC", "Microsoft YaHei", sans-serif; }
         #app { max-width: 500px; margin: 0 auto; padding: 25px; min-height: 100vh; display: flex; flex-direction: column; justify-content: center; }
-        .progress { font-size: 14px; color: #888; margin-bottom: 15px; letter-spacing: 1px; }
-        .q-box h2 { font-size: 22px; margin-bottom: 35px; line-height: 1.5; font-weight: 600; }
-        .opt { background: #1a1a1a; border: 1px solid #333; padding: 18px; margin-bottom: 15px; border-radius: 15px; cursor: pointer; transition: 0.2s; font-size: 16px; }
-        .opt:active { background: var(--dw-green); color: black; border-color: var(--dw-green); }
+        .progress { font-size: 12px; color: #666; margin-bottom: 15px; letter-spacing: 1px; font-family: monospace; }
+        .q-box h2 { font-size: 20px; margin-bottom: 30px; line-height: 1.5; font-weight: bold; }
+        .opt { background: #111; border: 1px solid #222; padding: 18px; margin-bottom: 12px; border-radius: 12px; cursor: pointer; transition: 0.2s; font-size: 15px; line-height: 1.4; }
+        .opt:active { background: var(--dw-green); color: black; font-weight: bold; }
         
-        /* 结果页样式 */
-        .res-page { display: none; text-align: center; animation: fadeIn 0.8s; }
-        .res-name { color: var(--dw-green); font-size: 32px; font-weight: 900; margin-bottom: 5px; }
-        .res-sub { color: #888; font-size: 14px; margin-bottom: 20px; }
-        .radar-box { background: #111; padding: 15px; border-radius: 15px; margin-bottom: 20px; text-align: left; font-size: 13px; }
-        .res-desc { text-align: left; line-height: 1.7; font-size: 15px; color: #ddd; background: #1a1a1a; padding: 20px; border-radius: 15px; border-left: 4px solid var(--dw-green); }
-        .footer-btn { margin-top: 30px; background: var(--dw-green); color: black; padding: 16px 40px; border-radius: 40px; font-weight: bold; text-decoration: none; display: inline-block; box-shadow: 0 10px 20px rgba(0,255,0,0.2); }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        .res-page { display: none; text-align: center; animation: slideUp 0.6s ease-out; padding-bottom: 40px; }
+        .res-name { color: var(--dw-green); font-size: 28px; font-weight: 900; margin-bottom: 5px; }
+        .res-id { font-size: 18px; color: #fff; margin-bottom: 15px; font-style: italic; }
+        .radar-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; background: #111; padding: 15px; border-radius: 12px; margin: 20px 0; font-size: 12px; text-align: left; border: 1px solid #222; }
+        .res-desc { text-align: left; line-height: 1.8; font-size: 14px; color: #bbb; background: #161616; padding: 20px; border-radius: 12px; margin-bottom: 25px; }
+        .tag-row { color: var(--dw-green); font-size: 13px; margin-top: 15px; font-weight: bold; text-align: left; }
+        .footer-btn { background: var(--dw-green); color: black; padding: 16px 40px; border-radius: 40px; font-weight: bold; text-decoration: none; display: inline-block; width: 80%; box-shadow: 0 4px 15px rgba(0,255,0,0.3); }
+        @keyframes slideUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
     </style>
 </head>
 <body>
@@ -35,86 +35,98 @@
     </div>
 
     <div id="res-ui" class="res-page">
+        <div id="res-icon" style="font-size: 60px; margin-bottom: 10px;"></div>
         <div class="res-name" id="res-name"></div>
-        <div class="res-sub" id="res-id"></div>
-        <div class="radar-box" id="res-radar"></div>
+        <div class="res-id" id="res-id"></div>
+        <div class="radar-grid" id="res-radar"></div>
         <div class="res-desc" id="res-desc"></div>
-        <a href="https://m.poizon.com" class="footer-btn">5.16-5.18 来有点东西大会现场</a>
+        <div class="tag-row" id="res-tags"></div>
+        <a href="https://m.poizon.com" class="footer-btn" style="margin-top:25px;">5.16-5.18 我在好东西大会等你哦！</a>
     </div>
 </div>
 
 <script>
     const questions = [
-        { q: "Q1. 另一半花3倍溢价买了个“漂亮破烂”还问你美不美？", opts: ["咬碎后槽牙：“美！买、得、好！”", "恋爱可以谈，乱花钱忍不了，分！", "谢邀，寡王赚钱寡王花。"], tag: "love" },
-        { q: "Q2. 玩鹅鸭杀被另一半贴脸开刀、疯狂背刺，你？", opts: ["我要开始用手玩了", "TA连刀我的时候都这么可爱", "在哪发能打游戏的对象"], tag: "love" },
-        { q: "Q3. 什么是海景谷？", opts: ["海边麦田特色地貌", "《我的世界》巨型仓库", "极稀少溢价飞天的周边"], correct: 2 },
-        { q: "Q4. 另一半送了你“极贵但巨丑”的礼物？", opts: ["送我就不错了", "下次直接折现转我支付宝", "你问我这种问题礼貌吗？"], tag: "strong" },
-        { q: "Q5. 发现另一半手机里有“私密相册”？", opts: ["不看保平安", "密码不交今晚别想睡", "小丑竟是我自己"], tag: "strong" },
-        { q: "Q6. 常说的“倒闭款”惨到什么程度？", opts: ["莆田工厂都懒得开模", "跌破发售价，黄牛亏本甩卖", "根本分不清爆款"], correct: 1 },
-        { q: "Q7. 五排生死局，另一半突然打电话求安慰？", opts: ["果断挂机！对象是心肝！", "手机免提：宝宝你怎么了", "挂断回微信：开团呢"], tag: "love" },
-        { q: "Q8. 撞见好兄弟的对象在外面跟别人牵手？", opts: ["直接拍照发他", "疯狂暗示他查岗", "关我屁事？别影响开黑"], tag: "chill" },
-        { q: "Q9. “买鞋热缩膜抽真空，供在墙上”你怎么看？", opts: ["纯纯大病，不穿等氧化吗？", "这叫流动的理财产品", "买不起，打扰了"], tag: "hunter" },
-        { q: "Q10. 遇到“我是学生，50块卖我（原价500）”的人？", opts: ["素质回复：不议价", "已读不回，直接拉黑", "反向折磨：我是孤儿倒贴50"], tag: "haha" },
-        { q: "Q11. 关于男人的“副驾座位”规矩是？", opts: ["老婆专属，亲妈坐后排", "谁先上车谁坐", "放绝版球衣，人都去后排"], tag: "strong" },
-        { q: "Q12. 兄弟买了个“土掉渣”挂件挂在限量包上？", opts: ["建议挂个脑科急诊", "土到极致就是潮", "恋爱脑发作，情侣款"], tag: "chill" },
-        { q: "Q13. 男生社交头像哪种最让你觉得“油腻”？", opts: ["豪车方向盘名表不露脸", "健身房对镜露腹肌内裤边", "非主流伤感动漫男头"], tag: "haha" },
-        { q: "Q14. “你这显卡能压住火光吗？”他其实在？", opts: ["担心你机箱着火", "询问玩《黑神话》顺不顺", "讽刺散热器声音大"], correct: 1 },
-        { q: "Q15. 抽盲盒时，“端盒”是指？", opts: ["两只手端着走", "整箱买断，暴力拆解", "空盲盒卖给收废品的"], correct: 1 },
-        { q: "Q16. 当你在路上偶遇库里，你会？", opts: ["当场唱跳库里之歌", "立马要合照签名", "老詹才是NBA真神"], tag: "haha" },
-        { q: "Q17. 什么是“重塑版（Restock/Retro）”？", opts: ["品牌补货", "换配色继续割", "材质细节比初代缩水"], correct: 2 },
-        { q: "Q18. 假如你穿越回 2000 年，你会？", opts: ["疯狂囤AJ11直接退休", "拉住马云一起玩", "购置地段房产躺赢"], tag: "hunter" },
-        { q: "Q19. 你什么时候会感叹「这有点东西」？", opts: ["队友预判了预判", "潮人兄弟给我爆改", "国足踢进世界杯决赛"], tag: "haha" },
-        { q: "Q20. 你觉得这套 DWTI 懂王测试怎么样？", opts: ["出题人多少带点大病", "有点东西，发给傻X室友", "哈哈关我屁事"], tag: "chill" }
+        { q: "Q1.【两性题】另一半花3倍溢价买了个“漂亮破烂”还问你美不美，你会：", opts: ["A. 咬碎后槽牙：“美！买、得、好！”", "B. 恋爱可以谈，乱花钱忍不了，分！", "C. 谢邀，寡王赚钱寡王花，根本没这种烦恼。"], cat: "dead" },
+        { q: "Q2.【两性题】玩鹅鸭杀被另一半贴脸开刀、疯狂背刺，你：", opts: ["A. 起身坐起来，并说：我要开始用手玩了", "B. 嘿嘿，TA连刀我的时候都这么可爱", "C. 慕了，在哪发能一起打游戏的对象"], cat: "love" },
+        { q: "Q3.【知识题】什么是海景谷？", opts: ["A. 海边麦田形成的风吹麦浪特色地貌", "B. 《我的世界》大佬在海边挖的巨型仓库", "C. 极稀少、溢价飞天的顶级周边【正确答案】"], correct: 2 },
+        { q: "Q4.【两性题】另一半送了你“极贵但巨丑”的生日礼物，你会：", opts: ["A. 还要啥自行车？送我就不错了", "B. 下次直接折现转我支付宝行不行", "C. 你问我这种问题？礼貌吗？"], cat: "strong" },
+        { q: "Q5.【两性题】发现另一半手机里有个“私密相册”，你第一反应：", opts: ["A. 不看保平安", "B. 密码不交今晚别想睡", "C. 我只有表情包，小丑竟是我自己"], cat: "haha" },
+        { q: "Q6.【知识题】常说的“倒闭款”，到底惨到什么程度？", opts: ["A. 丑到莆田工厂都懒得开模", "B. 跌破发售价，黄牛含泪亏本甩卖【正确答案】", "C. 路人无感，根本分不清爆款还是倒闭款"], correct: 1 },
+        { q: "Q7.【两性题】五排上分生死局，另一半突然心情不好打电话求安慰，你：", opts: ["A. 果断挂机！兄弟如手足，对象是心肝！", "B. 手机免提一开：“宝宝你怎么了（快上大招！）”", "C. 挂断，回微信：“开团呢，等下说。”"], cat: "love" },
+        { q: "Q8.【两性题】撞见好兄弟的对象在外面跟别人牵手，你：", opts: ["A. 直接拍照发他：哥们儿可以绿，不能被蒙", "B. 疯狂暗示他查岗但绝不挑明，怕最后我成了恶人", "C. 关我屁事？别影响周末开黑就行"], cat: "nfb" },
+        { q: "Q9.【态度题】对于“买鞋热缩膜抽真空，供在墙上不落地”的行为，你怎么看？", opts: ["A. 纯纯大病，不穿等它氧化了报废吗？", "B. 瞎叫什么，这叫流动的理财产品", "C. 买不起，打扰了"], cat: "hunter" },
+        { q: "Q10.【态度题】得物95分卖东西，遇到那种上来就说“我是学生，50块卖我行不行（原价500）”的人，你会：", opts: ["A. 素质回复：“不好意思呢亲，不议价。”", "B. 已读不回，直接拉黑", "C. 反向折磨：“我是孤儿，你倒贴 50 拿走吧。”"], cat: "haha" },
+        { q: "Q11.【态度题】关于男人的“副驾座位”，你的规矩是：", opts: ["A. 除了老婆/女朋友，亲妈来了都得坐后排", "B. 谁先上车谁坐，哪有那么多矫情的规矩，它就是一个座位", "C. 放我绝版球衣和外卖，人都给我去挤后排"], cat: "strong" },
+        { q: "Q12.【态度题】潮人兄弟买了个“土掉渣”挂件挂在限量包上，你觉得他：", opts: ["A. 审美突发性休克，建议挂个脑科急诊", "B. 返璞归真，土到极致就是潮，大俗即大雅", "C. 恋爱脑发作，和对象挂的情侣款"], cat: "stable" },
+        { q: "Q13.【态度题】男生在社交软件上的头像，哪种最让你觉得“油腻”？", opts: ["A. 坐在豪车方向盘前，露出名表的不露脸照片。", "B. 健身房对镜自拍，故意掀起衣服露出八块腹肌和半条内裤边。", "C. 纯黑的背景，或者一张极其非主流的伤感动漫男头。"], cat: "haha" },
+        { q: "Q14.【知识题】当一个Bro对着你的新电脑感叹“你这显卡能压住火光吗？”，他其实在：", opts: ["A. 担心你的机箱着火，建议你赶紧买个灭火器", "B. 询问你玩《黑神话：悟空》这种吃配置的大作顺不顺【正确答案】", "C. 讽刺你的散热器声音太大，像直升机起飞"], correct: 1 },
+        { q: "Q15.【知识题】抽盲盒时，所谓的“端盒”是指：", opts: ["A. 这一盒太重了，得用两只手端着走", "B. 既然抽不到隐藏，索性整箱买断，暴力拆解【正确答案】", "C. 把空的盲盒卖给收废品的，主打一个回血"], correct: 1 },
+        { q: "Q16.【态度题】当你在路上偶遇库里，你会：", opts: ["A. 当场给他在路边唱跳库里之歌，库里库里库里库里……", "B. 立马要合照签名，反手发到朋友圈，这波面子拉满", "C. 库里算什么，老詹才是NBA唯一真神"], cat: "haha" },
+        { q: "Q17.【知识题】什么是“重塑版（Restock/Retro）”", opts: ["A. 品牌良心发现，给老玩家补货", "B. 换个配色继续割，资本家榨干最后一点剩余价值", "C. 经典回归，但材质和细节通常比初代缩水【正确答案】"], correct: 2 },
+        { q: "Q18.【态度题】假如你穿越回 2000 年，你会选择：", opts: ["A. 疯狂买入 AJ11乔治城，囤到今天直接退休", "B. 在西湖边拉住马云，求他带我一起玩", "C. 倾尽所有购置核心地段房产，躺赢时代浪潮"], cat: "hunter" },
+        { q: "Q19.【态度题】你什么时候会忍不住感叹「这有点东西」：", opts: ["A. 上分开黑，队友预判了对面的预判，这把稳了", "B. 潮人兄弟给我爆改，摇身一变成为第二个吴彦祖", "C. 国足踢进世界杯决赛——已经不是有点东西能解释的了"], cat: "haha" },
+        { q: "Q20.【态度题】你觉得这套 DWTI 懂王测试怎么样？", opts: ["A. 纯纯搞我心态，出题人多少带点大病", "B. 有点东西，这就转发给那帮傻 X 室友", "C. 哈哈关我屁事"], cat: "nfb" }
     ];
 
     const personals = {
-        "BOSS": { name: "【满级懂王】BOSS", id: "VERSION-MASTER", radar: "战力99|抗割99|逻辑90|情绪5|抽象10", desc: "你是鄙视链顶端的那个人。别人买鞋看款式，你买鞋看公差。你平时不多废话，但只要开口，全场都要拿小本本记笔记。5.16来得物有点东西大会线下，肯定能一见如故。" },
-        "DEAD": { name: "【活死人】DEAD-BRO", id: "CYBER-ZEN", radar: "战力50|抗割100|逻辑40|情绪0|抽象70", desc: "游戏输了不叫，鞋子涨了不买。你已然如雕像般心如止水，练就了顶级免伤。5月16日，适合来有点东西小镇躺平公园睡一觉，安静摆烂完全不用社交。" },
-        "LOVE": { name: "【满分恋爱佬】SOFT-BRO", id: "PURE-WARRIOR", radar: "战力80|抗割10|逻辑30|情绪95|抽象40", desc: "你是当代情场的一股清流。你的副驾是圣地，工资是贡品。为了陪TA逛街，你能把生死局队友全卖了。5.16带上对象一起来大会，氛围感拉满，奖励你一个月豁免权。" },
-        "HAHA": { name: "【赛博乐子人】HAHA", id: "JOKER-GOD", radar: "战力60|抗割60|逻辑30|情绪50|抽象100", desc: "别人吵架你递刀，别人emo你倒立。你是最高级的喜剧大师，也是永不冷场的抽象天花板。5.16重庆现场素材管够，你不去整活简直是浪费才华。" },
-        "FEAR": { name: "【老脸往哪哥】NO-FACE", id: "NEW-BRO", radar: "战力10|抗割20|逻辑10|情绪80|抽象50", desc: "知识题对你来说像天书。不是不聪明，是确实还没入坑。真到聚会吹水，你确实容易没地方搁。建议去有点东西大会突击补课，省得被开除Bro籍。" }
+        "BOSS": { name: "【满级懂王】BOSS", id: "BOSS", icon: "💎", r: [99,99,90,5,10], tags: "#版本答案 #公差判官 #圈内活百科", desc: "你是鄙视链顶端的那个人。别人买鞋看款式，你买鞋看公差；别人打游戏看输赢，你打游戏看系统代码。你平时不多废话，但只要开口，全场都要停下来拿小本本记笔记，唯有牛币才能代表你。你这么懂圈内门道的人，5.16来得物有点东西大会线下，肯定能和各路大神一见如故、唠到尽兴。" },
+        "DEAD": { name: "【活死人】DEAD-BRO", id: "DEAD-BRO", icon: "🗿", r: [50,100,40,0,70], tags: "#情绪免伤100% #赛博兵马俑 #已老实", desc: "游戏输了不叫，鞋子涨了不买，对象分了不哭。你已然如雕像般心如止水、无欲无求，提前步入了“赛博禅宗”，练就了顶级免伤。这该死的松弛感，是你在这个暴躁世界里唯一的重装铠甲。5月16日，适合来得物有点东西小镇躺平公园睡一觉，安静摆烂完全不用被迫社交。" },
+        "STABLE": { name: "【稳稳帝】STABLE-KING", id: "STABLE-KING", icon: "📿", r: [80,70,80,30,50], tags: "#你猜我懂多少 #不慌 #这才是真含金量", desc: "什么圈都懂一点，什么问题都不急着站队。你像木鱼一样通透寡言、内敛自持，你的判断有自己的逻辑，不屑跟喷子浪费口舌。这种人在任何圈子都能混，但没人知道你到底是什么段位。5.16这种全能局，没你去重庆有点东西大会Carry真的不行。" },
+        "LOVE": { name: "【满分恋爱佬】SOFT-BRO", id: "SOFT-BRO", icon: "🐶", r: [80,10,30,95,40], tags: "#纯爱战神 #纸老虎 #忠犬型伴侣", desc: "你是濒危物种，是当代情场的一股清流。你是世俗口中的舔狗，但只有你知道这种专一到极致的幸福。你的副驾是圣地，你的工资是贡品。你的人生圆心就是另一半，为了陪TA逛街，你能把生死局的队友全卖了。虽然在五排群里你被喷成筛子，但看到TA一个微笑，你觉得这后槽牙咬碎了也值。周末约会选不到好地方？5.16带上对象一起来得物有点东西大会，打卡出片，氛围感直接拉满，这不奖励你一个月豁免权？" },
+        "NFB": { name: "【屁事哥】NFB", id: "NFB", icon: "🍹", r: [40,90,40,10,60], tags: "#关我屁事 #但我测完了 #佛系路人甲", desc: "全程抱着看热闹心态做题，妥妥吃瓜无辜路人甲。这套题和你没关系，但你测完了——这才是最离谱的事。你不是不懂，只是这些事跟你的人生轨迹暂时没有交集，或者你懒得掺合。主打一个随缘看戏没事干，5.16不如来有点东西大会线下溜达一圈，不参与讨论，只负责站在第一线吃最热乎的瓜。" },
+        "FEAR": { name: "【老脸往哪哥】NO-FACE", id: "NO-FACE", icon: "🤦", r: [10,20,10,80,50], tags: "#学费还没交完 #真性情不装 #待解锁新人", desc: "知识题对你来说像天书。不是不聪明，就是这些圈子你确实没入坑。好在虽然知识点是盲区，但你态度挺真实，主打一个真性情不装杯。但说真的，真到聚会吹水，你确实容易老脸没地方搁。5.16建议去重庆有点东西大会突击补课，省得被朋友开除Bro籍。" },
+        "HUNTER": { name: "【全职猎人】HUNTER", id: "HUNTER", icon: "🎯", r: [85,100,85,20,30], tags: "#理财鬼才 #限量猎手 #不做韭菜", desc: "你深谙薅羊毛之道，对你来说蹲捡漏就像买彩票坐等惊喜开奖。你对价格的敏感度堪比华尔街操盘手，在得物蹲点不是为了消费，是为了等那个标错价的慈善卖家。你的人生终极奥义是：用最低的成本装最大的杯。在你的字典里，原价购买等于智商税。5.16得物有点东西大会现场尖货不少，懂行情、会捡漏的你千万别错过，懂的都懂。" },
+        "CURIOUS": { name: "【大馋小子】CURIOUS-GUY", id: "CURIOUS-GUY", icon: "🍲", r: [65,40,60,80,90], tags: "#大馋小子 #什么都想搞清楚 #永远在发现新东西", desc: "你的关注列表里什么都有：从盲盒、球鞋到大佬的创业史。你不是没重点，你只是对这世界充满了“大馋小子”式的探索欲，什么新鲜好玩的都绝不落下，哪里有新奇玩意儿哪里就有你。5.16这种什么都有、啥都好玩的有点东西大会，简直就是为你量身定做的“自助餐大餐”。" },
+        "HAHA": { name: "【赛博乐子人】HAHA", id: "HAHA", icon: "🤸", r: [60,60,30,50,100], tags: "#乐子人 #整活大师 #抽象天花板", desc: "别人吵架你递刀，别人emo你倒立。你是最高级的喜剧大师，也是朋友聚会里永不冷场的抽象天花板。在这个无聊的世界，你主打一个无差别攻击。只要场子够乱，你就是那个最优雅的指挥家。5.16重庆有点东西大会现场素材管够，你不去整活简直是浪费才华。" },
+        "STRONG": { name: "【Strong哥】STRONGER", id: "STRONGER", icon: "🕶️", r: [75,50,60,40,50], tags: "#面子至上 #嘴硬心软 #硬核Bro", desc: "你把面子刻在骨子里，天生自带strong属性。撞见兄弟对象出轨你会疯狂暗示，恋爱受了委屈也绝不低头。你发的朋友圈总是若隐若现地露出logo，虽然内心慌得一批，但表面稳如老狗。你这种人，连睡觉都得穿着最帅的那套睡衣。论怎么装才最有面，来得物有点东西大会随手赢限量款大奖，包你轻松帅出圈。" }
     };
 
-    let idx = 0;
-    let kCount = 0;
-    let tags = { love: 0, chill: 0, haha: 0, strong: 0, hunter: 0 };
+    let idx = 0, kNum = 0;
+    let counts = { love:0, dead:0, haha:0, strong:0, hunter:0, nfb:0, stable:0 };
 
     function render() {
-        if(idx >= 20) return result();
+        if(idx >= 20) return showRes();
         document.getElementById('progress').innerText = `STEP ${idx+1} / 20`;
-        document.getElementById('q-text').innerText = questions[idx].q;
-        const o = document.getElementById('options');
-        o.innerHTML = '';
-        questions[idx].opts.forEach((text, i) => {
-            const d = document.createElement('div');
-            d.className = 'opt';
-            d.innerText = text;
+        const q = questions[idx];
+        document.getElementById('q-text').innerText = q.q;
+        const op = document.getElementById('options'); op.innerHTML = '';
+        q.opts.forEach((t, i) => {
+            const d = document.createElement('div'); d.className='opt'; d.innerText=t;
             d.onclick = () => {
-                if(questions[idx].correct === i) kCount++;
-                if(questions[idx].tag) tags[questions[idx].tag]++;
+                if(q.correct === i) kNum++;
+                if(q.cat) counts[q.cat]++;
                 idx++; render();
             };
-            o.appendChild(d);
+            op.appendChild(d);
         });
     }
 
-    function result() {
-        document.getElementById('quiz-ui').style.display = 'none';
-        document.getElementById('res-ui').style.display = 'block';
-        
-        let p = "HAHA"; // 默认乐子人
-        if(kCount === 5) p = "BOSS";
-        else if(kCount === 0) p = "FEAR";
-        else if(tags.love >= 3) p = "LOVE";
-        else if(tags.chill >= 2) p = "DEAD";
+    function showRes() {
+        document.getElementById('quiz-ui').style.display='none';
+        const ui = document.getElementById('res-ui'); ui.style.display='block';
+        let key = "CURIOUS"; 
+        // 逻辑优先级判定
+        if(kNum === 5) key = "BOSS";
+        else if(kNum === 0) key = "FEAR";
+        else if(kNum === 4) key = "STABLE";
+        else if(counts.love >= 2) key = "LOVE";
+        else if(counts.dead >= 1) key = "DEAD";
+        else if(counts.nfb >= 2) key = "NFB";
+        else if(counts.hunter >= 2) key = "HUNTER";
+        else if(counts.strong >= 2) key = "STRONG";
+        else if(counts.haha >= 3) key = "HAHA";
 
-        const res = personals[p];
-        document.getElementById('res-name').innerText = res.name;
-        document.getElementById('res-id').innerText = `# ${res.id}`;
-        document.getElementById('res-desc').innerText = res.desc;
-        document.getElementById('res-radar').innerHTML = res.radar.split('|').map(s => `<div>${s}</div>`).join('');
+        const p = personals[key];
+        document.getElementById('res-icon').innerText = p.icon;
+        document.getElementById('res-name').innerText = p.name;
+        document.getElementById('res-id').innerText = p.id;
+        document.getElementById('res-tags').innerText = p.tags;
+        document.getElementById('res-desc').innerText = p.desc;
+        const labels = ["战力","抗割","逻辑","情绪","抽象"];
+        document.getElementById('res-radar').innerHTML = p.r.map((v,i)=>`<div>${labels[i]}: ${v}</div>`).join('');
+        window.scrollTo(0,0);
     }
-
     render();
 </script>
 </body>
