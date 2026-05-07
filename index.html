@@ -41,33 +41,32 @@
         <div class="radar-grid" id="res-radar"></div>
         <div class="res-desc" id="res-desc"></div>
         <div class="tag-row" id="res-tags"></div>
-        <a href="#" class="footer-btn" style="margin-top:25px;">5.16-5.17 我在好东西大会等你哦！</a>
+        <a href="https://dw4.co/t/A/1vB9oucZI" class="footer-btn" style="margin-top:25px;">5.16-5.17 我在好东西大会等你！</a>
     </div>
 </div>
 
 <script>
-    // 题目数据保持不变
     const questions = [
-        { q: "Q1.【两性题】另一半花3倍溢价买了个“漂亮破烂”还问你美不美，你会：", opts: ["A. 咬碎后槽牙：“美！买、得、好！”", "B. 恋爱可以谈，乱花钱忍不了，分！", "C. 谢邀，寡王赚钱寡王花，根本没这种烦恼。"], cat: "dead" },
-        { q: "Q2.【两性题】玩鹅鸭杀被另一半贴脸开刀、疯狂背刺，你：", opts: ["A. 起身坐起来，并说：我要开始用手玩了", "B. 嘿嘿，TA连刀我的时候都这么可爱", "C. 慕了，在哪发能一起打游戏的对象"], cat: "love" },
-        { q: "Q3.【知识题】什么是海景谷？", opts: ["A. 海边麦田形成的风吹麦浪特色地貌", "B. 《我的世界》大佬在海边挖的巨型仓库", "C. 极稀少、溢价飞天的顶级周边"], correct: 2 },
-        { q: "Q4.【两性题】另一半送了你“极贵但巨丑”的生日礼物，你会：", opts: ["A. 还要啥自行车？送我就不错了", "B. 下次直接折现转我支付宝行不行", "C. 你问我这种问题？礼貌吗？"], cat: "love" },
-        { q: "Q5.【两性题】发现另一半手机里有个“私密相册”，你第一反应：", opts: ["A. 不看保平安", "B. 密码不交今晚别想睡", "C. 我只有表情包，小丑竟是我自己"], cat: "haha" },
-        { q: "Q6.【知识题】常说的“倒闭款”，到底惨到什么程度？", opts: ["A. 丑到莆田工厂都懒得开模", "B. 跌破发售价，黄牛含泪亏本甩卖", "C. 路人无感，根本分不清爆款还是倒闭款"], correct: 1, chanIdx: 0 },
-        { q: "Q7.【两性题】五排上分生死局，另一半突然心情不好打电话求安慰，你：", opts: ["A. 果断挂机！兄弟如手足，对象是心肝！", "B. 手机免提一开：“宝宝你怎么了（快上大招！）”", "C. 挂断，回微信：“开团呢，等下说。”"], cat: "love" },
-        { q: "Q8.【两性题】撞见好兄弟的对象在外面跟别人牵手，你：", opts: ["A. 直接拍照发他：哥们儿可以绿，不能被蒙", "B. 疯狂暗示他查岗但绝不挑明，怕最后我成了恶人", "C. 关我屁事？别影响周末开黑就行"], cat: "nfb", nfbC: 2 },
-        { q: "Q9.【态度题】对于“买鞋热缩膜抽真空，供在墙上不落地”的行为，你怎么看？", opts: ["A. 纯纯大病，不穿等它氧化了报废吗？", "B. 瞎叫什么，这叫流动的理财产品", "C. 买不起，打扰了"], cat: "hunter" },
-        { q: "Q10.【态度题】得物95分卖东西，遇到那种上来就说“我是学生，50块卖我行不行（原价500）”的人，你会：", opts: ["A. 素质回复：“不好意思呢亲，不议价。”", "B. 已读不回，直接拉黑", "C. 反向折磨：“我是孤儿，你倒贴 50 拿走吧。”"], cat: "haha" },
-        { q: "Q11.【态度题】关于男人的“副驾座位”，你的规矩是：", opts: ["A. 除了老婆/女朋友，亲妈来了都得坐后排", "B. 谁先上车谁坐，哪有那么多矫情的规矩，它就是一个座位", "C. 放我绝版球衣和外卖，人都给我去挤后排"], cat: "love" },
-        { q: "Q12.【态度题】潮人兄弟买了个“土掉渣”挂件挂在限量包上，你觉得他：", opts: ["A. 审美突发性休克，建议挂个脑科急诊", "B. 返璞归真，土到极致就是潮，大俗即大雅", "C. 恋爱脑发作，和对象挂的情侣款"], cat: "stable" },
-        { q: "Q13.【态度题】男生在社交软件上的头像，哪种最让你觉得“油腻”？", opts: ["A. 坐在豪车方向盘前，露出名表的不露脸照片。", "B. 健身房对镜自拍，故意掀起衣服露出八块腹肌和半条内裤边。", "C. 纯黑的背景，或者一张极其非主流的伤感动漫男头。"], cat: "haha" },
-        { q: "Q14.【知识题】当一个Bro对着你的新电脑感叹“你这显卡能压住火光吗？”，他其实在：", opts: ["A. 担心你的机箱着火，建议你赶紧买个灭火器", "B. 询问你玩《黑神话：悟空》这种吃配置的大作顺不顺", "C. 讽刺你的散热器声音太大，像直升机起飞"], correct: 1, chanIdx: 0 },
-        { q: "Q15.【知识题】抽盲盒时，所谓的“端盒”是指：", opts: ["A. 这一盒太重了，得用两只手端着走", "B. 既然抽不到隐藏，索性整箱买断，暴力拆解", "C. 把空的盲盒卖给收废品的，主打一个回血"], correct: 1, chanIdx: 0 },
-        { q: "Q16.【态度题】当你在路上偶遇库里，你会：", opts: ["A. 当场给他在路边唱跳库里之歌，库里库里库里库里……", "B. 立马要合照签名，反手发到朋友圈，这波面子拉满", "C. 库里算什么，老詹才是NBA唯一真神"], cat: "haha" },
-        { q: "Q17.【知识题】什么是“重塑版（Restock/Retro）”", opts: ["A. 品牌良心发现，给老玩家补货", "B. 换个配色继续割，资本家榨干最后一点剩余价值", "C. 经典回归，但材质和细节通常比初代缩水"], correct: 2, chanIdx: 1 },
-        { q: "Q18.【态度题】假如你穿越回 2000 年，你会选择：", opts: ["A. 疯狂买入 AJ11乔治城，囤到今天直接退休", "B. 在西湖边拉住马云，求他带我一起玩", "C. 倾尽所有购置核心地段房产，躺赢时代浪潮"], cat: "hunter", chanIdx: 1 },
-        { q: "Q19.【态度题】你什么时候会忍不住感叹「这有点东西」：", opts: ["A. 上分开黑，队友预判了对面的预判，这把稳了", "B. 潮人兄弟给我爆改，摇身一变成为第二个吴彦祖", "C. 国足踢进世界杯决赛——已经不是有点东西能解释的了"], cat: "haha" },
-        { q: "Q20.【态度题】你觉得这套 DWTI 懂王测试怎么样？", opts: ["A. 纯纯搞我心态，出题人多少带点大病", "B. 有点东西，这就转发给那帮傻 X 室友", "C. 哈哈关我屁事"], cat: "nfb", nfbC: 2 }
+        { q: "Q1.【两性题】另一半花3倍溢价买了个“漂亮破烂”还问你美不美，你会：", opts: [{t:"A. 咬碎后槽牙：“美！买、得、好！”}, {t:"B. 恋爱可以谈，乱花钱忍不了，分！"}, {t:"C. 谢邀，寡王赚钱寡王花，根本没这种烦恼。", cat:"dead"}] },
+        { q: "Q2.【两性题】玩鹅鸭杀被另一半贴脸开刀、疯狂背刺，你：", opts: [{t:"A. 起身坐起来，并说：我要开始用手玩了"}, {t:"B. 嘿嘿，TA连刀我的时候都这么可爱", cat:"love"}, {t:"C. 慕了，在哪发能一起打游戏的对象"}] },
+        { q: "Q3.【知识题】什么是海景谷？", opts:[{t:"A. 海边麦田形成的风吹麦浪特色地貌", cat:"fear"}, {t:"B. 《我的世界》大佬在海边挖的巨型仓库", cat:"curious"}, {t:"C. 极稀少、溢价飞天的顶级周边", isCorrect: true, cat:"stable"}] },
+        { q: "Q4.【两性题】另一半送了你“极贵但巨丑”的生日礼物，你会：", opts:[{t:"A. 还要啥自行车？送我就不错了", cat:"love"}, {t:"B. 下次直接折现转我支付宝行不行", cat:"strong"}, {t:"C. 你问我这种问题？礼貌吗？"}] },
+        { q: "Q5.【两性题】发现另一半手机里有个“私密相册”，你第一反应：", opts: [{t:"A. 不看保平安", cat:"stable"}, {t:"B. 密码不交今晚别想睡", cat:"strong"}, {t:"C. 我只有表情包，小丑竟是我自己", cat:"haha"}] },
+        { q: "Q6.【知识题】常说的“倒闭款”，到底惨到什么程度？", opts: [{t:"A. 丑到莆田工厂都懒得开模", cat:"curious"}, {t:"B. 跌破发售价，黄牛含泪亏本甩卖", isCorrect: true, cat:"stable"}, {t:"C. 路人无感，根本分不清爆款还是倒闭款", cat:"fear nfb"}] },
+        { q: "Q7.【两性题】五排上分生死局，另一半突然心情不好打电话求安慰，你：", opts:[{t:"A. 果断挂机！兄弟如手足，对象是心肝！", cat:"love"}, {t:"B. 手机免提一开：“宝宝你怎么了（快上大招！）”", cat:"stable"}, {t:"C. 挂断，回微信：“开团呢，等下说。”", cat:"dead strong"}] },
+        { q: "Q8.【两性题】撞见好兄弟的对象在外面跟别人牵手，你：", opts: [{t:"A. 直接拍照发他：哥们儿可以绿，不能被蒙"}, {t:"B. 疯狂暗示他查岗但绝不挑明，怕最后我成了恶人", cat:"strong"}, {t:"C. 关我屁事？别影响周末开黑就行", cat:"nfb", isMustNfb: true}] },
+        { q: "Q9.【态度题】对于“买鞋热缩膜抽真空，供在墙上不落地”的行为，你怎么看？", opts:[{t:"A. 纯纯大病，不穿等它氧化了报废吗？"}, {t:"B. 瞎叫什么，这叫流动的理财产品", cat:"hunter"}, {t:"C. 买不起，打扰了", cat:"stable"}] },
+        { q: "Q10.【态度题】得物95分卖东西，遇到那种上来就说“我是学生，50块卖我行不行（原价500）”的人，你会：", opts:[{t:"A. 素质回复：“不好意思呢亲，不议价。”", cat:"hunter"}, {t:"B. 已读不回，直接拉黑", cat:"dead"}, {t:"C. 反向折磨：“我是孤儿，你倒贴 50 拿走吧。”", cat:"haha"}] },
+        { q: "Q11.【态度题】关于男人的“副驾座位”，你的规矩是：", opts: [{t:"A. 除了老婆/女朋友，亲妈来了都得坐后排", cat:"love"}, {t:"B. 谁先上车谁坐，没有那么多规矩", cat:"nfb"}, {t:"C. 放我绝版球衣和外卖，人都给我去挤后排", cat:"strong"}] },
+        { q: "Q12.【态度题】潮人兄弟买了个“土掉渣”挂件挂在限量包上，你觉得他：", opts: [{t:"A. 审美突发性休克，建议挂个脑科急诊", cat:"haha"}, {t:"B. 返璞归真，土到极致就是潮，大俗即大雅", cat:"stable"}, {t:"C. 恋爱脑发作，和对象挂的情侣款"}] },
+        { q: "Q13.【态度题】男生在社交软件上的头像，哪种最让你觉得“油腻”？", opts: [{t:"A. 坐在豪车方向盘前，露出名表的不露脸照片"}, {t:"B.健身房对镜自拍，故意掀起衣服露出八块腹肌和半条内裤边"}, {t:"C. 纯黑的背景，或者一张极其非主流的伤感动漫男头"}] },
+        { q: "Q14.【知识题】当一个Bro对着你的新电脑感叹“你这显卡能压住火光吗？”，他其实在：", opts: [{t:"A. 担心你的机箱着火，建议你赶紧买个灭火器", cat:"curious"}, {t:"B. 询问你玩《黑神话：悟空》这种吃配置的大作顺不顺", isCorrect: true, cat:"stable"}, {t:"C. 讽刺你的散热器声音太大，像直升机起飞", cat:"fear"}] },
+        { q: "Q15.【知识题】抽盲盒时，所谓的“端盒”是指：", [{t:"A. 这一盒太重了，得用两只手端着走", cat:"curious"}, {t:"B. 既然抽不到隐藏，索性整箱买断，暴力拆解", isCorrect: true, cat:"hunter stable"}, {t:"C. 把空的盲盒卖给收废品的，主打一个回血", cat:"fear"}] },
+        { q: "Q16.【态度题】当你在路上偶遇库里，你会：", opts:[{t:"A. 当场给他在路边唱跳库里之歌，库里库里库里库里……", cat:"haha"}, {t:"B. 立马要合照签名，反手发到朋友圈，这波面子拉满", cat:"strong"}, {t:"C. 库里算什么，老詹才是NBA唯一真神"}] },
+        { q: "Q17.【知识题】什么是“重塑版（Restock/Retro）”", opts: [{t:"A. 品牌良心发现，给老玩家补货", cat:"fear"}, {t:"B. 换个配色继续割，资本家榨干最后一点剩余价值", cat:"hunter curious"}, {t:"C. 经典回归，但材质和细节通常比初代缩水", isCorrect: true, cat:"stable"}] },
+        { q: "Q18.【态度题】假如你穿越回 2000 年，你会选择：", opts: [{t:"A. 疯狂买入 AJ11乔治城，囤到今天直接退休", cat:"hunter"}, {t:"B. 在西湖边拉住马云，求他带我一起玩", cat:"curious"}, {t:"C. 倾尽所有购置核心地段房产，躺赢时代浪潮"}] },
+        { q: "Q19.【态度题】你什么时候会忍不住感叹「这有点东西」：", opts: [{t:"A. 上分开黑，队友预判了对面的预判，这把稳了", cat:"stable"}, {t:"B. 潮人兄弟给我爆改，摇身一变成为第二个吴彦祖", cat:"strong"}, {t:"C. 国足踢进世界杯决赛——已经不是有点东西能解释的了", cat:"haha"}] },
+        { q: "Q20.【态度题】你觉得这套 DWTI 懂王测试怎么样？", [{t:"A. 纯纯搞我心态"}, {t:"B. 有点东西，转发给室友"}, {t:"C. 哈哈关我屁事", cat:"nfb", isMustNfb: true}] } ];
     ];
 
    const personals = {
@@ -83,9 +82,8 @@
         "STRONG": { name: "【Strong哥】STRONGER", id: "STRONGER", icon: "🕶️", r: [75,50,60,40,50], tags: "#面子至上 #嘴硬心软 #硬核Bro", desc: "你把面子刻在骨子里，天生自带strong属性。撞见兄弟对象出轨你会疯狂暗示，恋爱受了委屈也绝不低头。你发的朋友圈总是若隐若现地露出logo，虽然内心慌得一批，但表面稳如老狗。你这种人，连睡觉都得穿着最帅的那套睡衣。论怎么装才最有面，来得物有点东西大会随手赢限量款大奖，包你轻松帅出圈。" }
     };
 
-    let idx = 0, kNum = 0, chanCount = 0;
-    let nfbSelectedCount = 0; 
-    let counts = { love:0, dead:0, haha:0, strong:0, hunter:0, nfb:0, stable:0 };
+   let idx = 0, kNum = 0, nfbMustCount = 0;
+    let counts = { love:0, dead:0, haha:0, strong:0, hunter:0, nfb:0, stable:0, curious:0, fear:0 };
 
     function render() {
         if(idx >= 20) return showRes();
@@ -93,13 +91,12 @@
         const q = questions[idx];
         document.getElementById('q-text').innerText = q.q;
         const op = document.getElementById('options'); op.innerHTML = '';
-        q.opts.forEach((t, i) => {
-            const d = document.createElement('div'); d.className='opt'; d.innerText=t;
+        q.opts.forEach((opt, i) => {
+            const d = document.createElement('div'); d.className='opt'; d.innerText=opt.t;
             d.onclick = () => {
-                if(q.chanIdx !== undefined && i === q.chanIdx) chanCount++;
-                if(q.nfbC !== undefined && i === q.nfbC) nfbSelectedCount++;
-                if(q.correct === i) kNum++;
-                if(q.cat) counts[q.cat]++;
+                if(opt.cat) counts[opt.cat]++;
+                if(opt.isCorrect) kNum++;
+                if(opt.isMustNfb) nfbMustCount++;
                 idx++; render();
             };
             op.appendChild(d);
@@ -107,49 +104,99 @@
     }
 
     function showRes() {
-        document.getElementById('quiz-ui').style.display='none';
-        const ui = document.getElementById('res-ui'); ui.style.display='block';
-        
-        let key = ""; 
-        // 优先级逻辑判定
-        if(kNum === 5) key = "BOSS";
-        else if(counts.love >= 4) key = "LOVE";
-        else if(counts.hunter >= 3) key = "HUNTER";
-        else if(nfbSelectedCount === 2 && counts.nfb >= 2) key = "NFB";
-        else if(chanCount >= 3) key = "CURIOUS";
-        else if(counts.strong >= 3) key = "STRONG";
-        else if(counts.haha >= 3) key = "HAHA";
-        else if(counts.dead >= 2) key = "DEAD";
-        else if(kNum >= 2) key = "STABLE";
-        else key = "FEAR";
+    // 隐藏题目界面，显示结果界面
+    document.getElementById('quiz-ui').style.display = 'none';
+    const ui = document.getElementById('res-ui');
+    ui.style.display = 'block';
 
-        const p = personals[key];
+    let key = "";
 
-        // --- 核心修改：动态雷达运算逻辑 ---
-        // 逻辑：[战力, 抗割, 逻辑, 情绪, 抽象]
-        const power = Math.min(kNum * 20 + 10, 100); 
-        const antiScam = Math.min(counts.hunter * 25 + (kNum > 3 ? 20 : 0), 100);
-        const logic = Math.min(counts.stable * 20 + (kNum * 10), 100);
-        const emotion = Math.max(Math.min(counts.love * 30 - counts.dead * 10 + 40, 100), 10);
-        const abstract = Math.min(counts.haha * 20 + nfbSelectedCount * 25, 100);
-
-        const dynamicR = [power, antiScam, logic, emotion, abstract];
-        // -------------------------------
-
-        document.getElementById('res-icon').innerText = p.icon;
-        document.getElementById('res-name').innerText = p.name;
-        document.getElementById('res-id').innerText = p.id;
-        document.getElementById('res-tags').innerText = p.tags;
-        document.getElementById('res-desc').innerText = p.desc;
-        
-        const labels = ["战力","抗割","逻辑","情绪","抽象"];
-        document.getElementById('res-radar').innerHTML = dynamicR.map((v,i)=>`
-            <div><span class="radar-val">${v}</span>${labels[i]}</div>
-        `).join('');
-        
-        window.scrollTo(0,0);
+    // --- 第一阶段：优先级拦截 (硬核/特定人群) ---
+    
+    if (kNum === 5) {
+        // 1. 满级懂王：优先级最高，五道知识题全对直接封王
+        key = "BOSS";
+    } 
+    else if (nfbMustCount === 2) {
+        // 2. 屁事哥：Q8和Q20必选C，判定优先级极高
+        key = "NFB";
+    } 
+    else if (counts.love >= 4) {
+        // 3. 恋爱佬：判定条件设为4，作为稀有硬核人格拦截
+        key = "LOVE";
     }
-    render();
-</script>
-</body>
-</html>
+    else if (counts.fear >= 3) {
+        // 4. 老脸往哪哥：知识题选错太多，优先判定
+        key = "FEAR";
+    }
+
+    // --- 第二阶段：性格比大小 (主流人格均衡区) ---
+
+    if (key === "") {
+        // 定义参与竞争的性格分类
+        const candidates = ["hunter", "strong", "haha", "curious", "dead"];
+        
+        // 找出得分最高的性格
+        let maxVal = 0;
+        let winner = "";
+        
+        candidates.forEach(c => {
+            if (counts[c] > maxVal) {
+                maxVal = counts[c];
+                winner = c.toUpperCase();
+            }
+        });
+
+        // 只有最高分达到一定程度（比如3分）才触发性格结果
+        if (maxVal >= 3) {
+            key = winner;
+        } 
+        // --- 第三阶段：兜底判定 (平庸/稳重区) ---
+        else if (kNum >= 2 || counts.stable >= 3) {
+            // 知识及格或者选了很多稳重选项
+            key = "STABLE";
+        } 
+        else {
+            // 如果什么分都很低，根据知识对错情况收尾
+            key = kNum === 0 ? "FEAR" : "DEAD";
+        }
+    }
+
+    // 获取对应的人格配置数据
+    const p = personals[key] || personals["STABLE"];
+
+    // --- 第四阶段：动态雷达数值运算 (让结果页的数值各不相同) ---
+    // 逻辑顺序：[战力, 抗割, 逻辑, 情绪, 抽象]
+    
+    // 战力：主要看知识题正确数
+    const power = Math.min(kNum * 18 + 10 + (counts.strong * 2), 100); 
+    // 抗割：看理财猎人得分 + 知识储备
+    const antiScam = Math.min(counts.hunter * 20 + (kNum * 8), 100);
+    // 逻辑：稳重得分 + 知识储备
+    const logic = Math.min(counts.stable * 15 + (kNum * 10), 100);
+    // 情绪：恋爱得分 - 活死人/屁事得分
+    const emotion = Math.max(Math.min(counts.love * 25 - (counts.dead + nfbMustCount) * 15 + 40, 100), 5);
+    // 抽象：乐子得分 + 屁事行为
+    const abstract = Math.min(counts.haha * 20 + nfbMustCount * 25, 100);
+
+    const dynamicR = [power, antiScam, logic, emotion, abstract];
+    const labels = ["战力", "抗割", "逻辑", "情绪", "抽象"];
+
+    // --- 第五阶段：页面渲染 ---
+    document.getElementById('res-icon').innerText = p.icon;
+    document.getElementById('res-name').innerText = p.name;
+    document.getElementById('res-id').innerText = p.id;
+    document.getElementById('res-tags').innerText = p.tags;
+    document.getElementById('res-desc').innerText = p.desc;
+    
+    // 渲染雷达图数值
+    document.getElementById('res-radar').innerHTML = dynamicR.map((v, i) => `
+        <div class="radar-item">
+            <span class="radar-val">${v}</span>
+            <span class="radar-label">${labels[i]}</span>
+        </div>
+    `).join('');
+
+    // 回到页面顶部
+    window.scrollTo(0, 0);
+}
