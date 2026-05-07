@@ -61,12 +61,12 @@
         { q: "Q12.【态度题】潮人兄弟买了个“土掉渣”挂件挂在限量包上，你觉得他：", opts: [{t:"A. 审美突发性休克，建议挂个脑科急诊", cat:"haha"}, {t:"B. 返璞归真，土到极致就是潮，大俗即大雅", cat:"stable"}, {t:"C. 恋爱脑发作，和对象挂的情侣款"}] },
         { q: "Q13.【态度题】男生在社交软件上的头像，哪种最让你觉得“油腻”？", opts: [{t:"A. 坐在豪车方向盘前，露出名表的不露脸照片"}, {t:"B.健身房对镜自拍，故意掀起衣服露出八块腹肌和半条内裤边"}, {t:"C. 纯黑的背景，或者一张极其非主流的伤感动漫男头"}] },
         { q: "Q14.【知识题】当一个Bro对着你的新电脑感叹“你这显卡能压住火光吗？”，他其实在：", opts: [{t:"A. 担心你的机箱着火，建议你赶紧买个灭火器", cat:"curious"}, {t:"B. 询问你玩《黑神话：悟空》这种吃配置的大作顺不顺", isCorrect: true, cat:"stable"}, {t:"C. 讽刺你的散热器声音太大，像直升机起飞", cat:"fear"}] },
-        { q: "Q15.【知识题】抽盲盒时，所谓的“端盒”是指：", [{t:"A. 这一盒太重了，得用两只手端着走", cat:"curious"}, {t:"B. 既然抽不到隐藏，索性整箱买断，暴力拆解", isCorrect: true, cat:"hunter stable"}, {t:"C. 把空的盲盒卖给收废品的，主打一个回血", cat:"fear"}] },
+        { q: "Q15.【知识题】抽盲盒时，所谓的“端盒”是指：", opts: [{t:"A. 这一盒太重了，得用两只手端着走", cat:"curious"}, {t:"B. 既然抽不到隐藏，索性整箱买断，暴力拆解", isCorrect: true, cat:"hunter stable"}, {t:"C. 把空的盲盒卖给收废品的，主打一个回血", cat:"fear"}] },
         { q: "Q16.【态度题】当你在路上偶遇库里，你会：", opts:[{t:"A. 当场给他在路边唱跳库里之歌，库里库里库里库里……", cat:"haha"}, {t:"B. 立马要合照签名，反手发到朋友圈，这波面子拉满", cat:"strong"}, {t:"C. 库里算什么，老詹才是NBA唯一真神"}] },
         { q: "Q17.【知识题】什么是“重塑版（Restock/Retro）”", opts: [{t:"A. 品牌良心发现，给老玩家补货", cat:"fear"}, {t:"B. 换个配色继续割，资本家榨干最后一点剩余价值", cat:"hunter curious"}, {t:"C. 经典回归，但材质和细节通常比初代缩水", isCorrect: true, cat:"stable"}] },
         { q: "Q18.【态度题】假如你穿越回 2000 年，你会选择：", opts: [{t:"A. 疯狂买入 AJ11乔治城，囤到今天直接退休", cat:"hunter"}, {t:"B. 在西湖边拉住马云，求他带我一起玩", cat:"curious"}, {t:"C. 倾尽所有购置核心地段房产，躺赢时代浪潮"}] },
         { q: "Q19.【态度题】你什么时候会忍不住感叹「这有点东西」：", opts: [{t:"A. 上分开黑，队友预判了对面的预判，这把稳了", cat:"stable"}, {t:"B. 潮人兄弟给我爆改，摇身一变成为第二个吴彦祖", cat:"strong"}, {t:"C. 国足踢进世界杯决赛——已经不是有点东西能解释的了", cat:"haha"}] },
-        { q: "Q20.【态度题】你觉得这套 DWTI 懂王测试怎么样？", [{t:"A. 纯纯搞我心态"}, {t:"B. 有点东西，转发给室友"}, {t:"C. 哈哈关我屁事", cat:"nfb", isMustNfb: true}] } ];
+        { q: "Q20.【态度题】你觉得这套 DWTI 懂王测试怎么样？", opts: [{t:"A. 纯纯搞我心态"}, {t:"B. 有点东西，转发给室友"}, {t:"C. 哈哈关我屁事", cat:"nfb", isMustNfb: true}] } ];
     ];
 
    const personals = {
@@ -83,8 +83,18 @@
     };
 
    let idx = 0, kNum = 0, nfbMustCount = 0;
-    let counts = { love:0, dead:0, haha:0, strong:0, hunter:0, nfb:0, stable:0, curious:0, fear:0 };
-
+    let counts = { 
+    love: 0, 
+    dead: 0, 
+    haha: 0, 
+    strong: 0, 
+    hunter: 0, 
+    nfb: 0, 
+    stable: 0, 
+    curious: 0, // 必须添加，对应 Q3, Q6, Q14, Q15, Q17, Q18 等
+    fear: 0     // 必须添加，对应 Q3, Q6, Q14, Q15, Q17 等
+};
+    
     function render() {
         if(idx >= 20) return showRes();
         document.getElementById('progress').innerText = `STEP ${idx+1} / 20`;
@@ -93,14 +103,22 @@
         const op = document.getElementById('options'); op.innerHTML = '';
         q.opts.forEach((opt, i) => {
             const d = document.createElement('div'); d.className='opt'; d.innerText=opt.t;
-            d.onclick = () => {
-                if(opt.cat) counts[opt.cat]++;
-                if(opt.isCorrect) kNum++;
-                if(opt.isMustNfb) nfbMustCount++;
-                idx++; render();
-            };
-            op.appendChild(d);
+           d.onclick = () => {
+    if (opt.cat) {
+        // 使用空格拆分字符串，并为每个属性分别加分
+        const cats = opt.cat.split(' ');
+        cats.forEach(c => {
+            if (c) { // 确保字符不为空
+                counts[c] = (counts[c] || 0) + 1;
+            }
         });
+    }
+    
+    if (opt.isCorrect) kNum++;
+    if (opt.isMustNfb) nfbMustCount++;
+    idx++; 
+    render();
+};
     }
 
     function showRes() {
