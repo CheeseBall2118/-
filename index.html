@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>DWTI 懂王测试 - 有点东西大会</title>
+    <title>DWTI 懂王测试 - 动态雷达版</title>
     <style>
         :root { --dw-green: #00FF00; --bg-black: #050505; }
         body { margin: 0; background: var(--bg-black); color: white; font-family: -apple-system, "PingFang SC", "Microsoft YaHei", sans-serif; overflow-x: hidden; }
@@ -41,11 +41,12 @@
         <div class="radar-grid" id="res-radar"></div>
         <div class="res-desc" id="res-desc"></div>
         <div class="tag-row" id="res-tags"></div>
-        <a href=" https://dw4.co/t/A/1vB9oucZI" class="footer-btn" style="margin-top:25px;">5.16-5.17 我在好东西大会等你哦！</a>
+        <a href="#" class="footer-btn" style="margin-top:25px;">5.16-5.17 我在好东西大会等你哦！</a>
     </div>
 </div>
 
 <script>
+    // 题目数据保持不变
     const questions = [
         { q: "Q1.【两性题】另一半花3倍溢价买了个“漂亮破烂”还问你美不美，你会：", opts: ["A. 咬碎后槽牙：“美！买、得、好！”", "B. 恋爱可以谈，乱花钱忍不了，分！", "C. 谢邀，寡王赚钱寡王花，根本没这种烦恼。"], cat: "dead" },
         { q: "Q2.【两性题】玩鹅鸭杀被另一半贴脸开刀、疯狂背刺，你：", opts: ["A. 起身坐起来，并说：我要开始用手玩了", "B. 嘿嘿，TA连刀我的时候都这么可爱", "C. 慕了，在哪发能一起打游戏的对象"], cat: "love" },
@@ -69,7 +70,7 @@
         { q: "Q20.【态度题】你觉得这套 DWTI 懂王测试怎么样？", opts: ["A. 纯纯搞我心态，出题人多少带点大病", "B. 有点东西，这就转发给那帮傻 X 室友", "C. 哈哈关我屁事"], cat: "nfb", nfbC: 2 }
     ];
 
-    const personals = {
+   const personals = {
         "BOSS": { name: "【满级懂王】BOSS", id: "BOSS", icon: "💎", r: [99,99,90,5,10], tags: "#版本答案 #公差判官 #圈内活百科", desc: "你是鄙视链顶端的那个人。别人买鞋看款式，你买鞋看公差；别人打游戏看输赢，你打游戏看系统代码。你平时不多废话，但只要开口，全场都要停下来拿小本本记笔记，唯有牛币才能代表你。你这么懂圈内门道的人，5.16来得物有点东西大会线下，肯定能和各路大神一见如故、唠到尽兴。" },
         "DEAD": { name: "【活死人】DEAD-BRO", id: "DEAD-BRO", icon: "🗿", r: [50,100,40,0,70], tags: "#情绪免伤100% #赛博兵马俑 #已老实", desc: "游戏输了不叫，鞋子涨了不买，对象分了不哭。你已然如雕像般心如止水、无欲无求，提前步入了“赛博禅宗”，练就了顶级免伤。这该死的松弛感，是你在这个暴躁世界里唯一的重装铠甲。5月16日，适合来得物有点东西小镇躺平公园睡一觉，安静摆烂完全不用被迫社交。" },
         "STABLE": { name: "【稳稳帝】STABLE-KING", id: "STABLE-KING", icon: "📿", r: [80,70,80,30,50], tags: "#你猜我懂多少 #不慌 #这才是真含金量", desc: "什么圈都懂一点，什么问题都不急着站队。你像木鱼一样通透寡言、内敛自持，你的判断有自己的逻辑，不屑跟喷子浪费口舌。这种人在任何圈子都能混，但没人知道你到底是什么段位。5.16这种全能局，没你去重庆有点东西大会Carry真的不行。" },
@@ -110,26 +111,31 @@
         const ui = document.getElementById('res-ui'); ui.style.display='block';
         
         let key = ""; 
-
-        // 【第一梯队：硬核与稀有】
+        // 优先级逻辑判定
         if(kNum === 5) key = "BOSS";
-        else if(counts.love >= 3) key = "LOVE";     // 优先级大幅提升
-        else if(counts.hunter >= 3) key = "HUNTER"; // 优先级大幅提升
-
-        // 【第二梯队：特定行为锁定】
+        else if(counts.love >= 3) key = "LOVE";
+        else if(counts.hunter >= 3) key = "HUNTER";
         else if(nfbSelectedCount === 2 && counts.nfb >= 2) key = "NFB";
         else if(chanCount >= 3) key = "CURIOUS";
-
-        // 【第三梯队：性格倾向】
         else if(counts.strong >= 3) key = "STRONG";
         else if(counts.haha >= 3) key = "HAHA";
         else if(counts.dead >= 2) key = "DEAD";
-
-        // 【第四梯队：知识分流】
         else if(kNum >= 2) key = "STABLE";
         else key = "FEAR";
 
         const p = personals[key];
+
+        // --- 核心修改：动态雷达运算逻辑 ---
+        // 逻辑：[战力, 抗割, 逻辑, 情绪, 抽象]
+        const power = Math.min(kNum * 20 + 10, 100); 
+        const antiScam = Math.min(counts.hunter * 25 + (kNum > 3 ? 20 : 0), 100);
+        const logic = Math.min(counts.stable * 20 + (kNum * 10), 100);
+        const emotion = Math.max(Math.min(counts.love * 30 - counts.dead * 10 + 40, 100), 10);
+        const abstract = Math.min(counts.haha * 20 + nfbSelectedCount * 25, 100);
+
+        const dynamicR = [power, antiScam, logic, emotion, abstract];
+        // -------------------------------
+
         document.getElementById('res-icon').innerText = p.icon;
         document.getElementById('res-name').innerText = p.name;
         document.getElementById('res-id').innerText = p.id;
@@ -137,7 +143,7 @@
         document.getElementById('res-desc').innerText = p.desc;
         
         const labels = ["战力","抗割","逻辑","情绪","抽象"];
-        document.getElementById('res-radar').innerHTML = p.r.map((v,i)=>`
+        document.getElementById('res-radar').innerHTML = dynamicR.map((v,i)=>`
             <div><span class="radar-val">${v}</span>${labels[i]}</div>
         `).join('');
         
