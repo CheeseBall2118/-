@@ -171,7 +171,7 @@
             key = winner;
         } 
         // --- 第三阶段：兜底判定 (平庸/稳重区) ---
-        else if (kNum >= 2 || counts.stable >= 3) {
+        else if (kNum >= 3 || counts.stable >= 4) {
             // 知识及格或者选了很多稳重选项
             key = "STABLE";
         } 
@@ -219,3 +219,6 @@
     // 回到页面顶部
     window.scrollTo(0, 0);
 }
+    render(); // 
+
+</script>
