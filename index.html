@@ -94,32 +94,33 @@
     curious: 0, // 必须添加，对应 Q3, Q6, Q14, Q15, Q17, Q18 等
     fear: 0     // 必须添加，对应 Q3, Q6, Q14, Q15, Q17 等
 };
-    
     function render() {
         if(idx >= 20) return showRes();
         document.getElementById('progress').innerText = `STEP ${idx+1} / 20`;
         const q = questions[idx];
         document.getElementById('q-text').innerText = q.q;
-        const op = document.getElementById('options'); op.innerHTML = '';
+        const op = document.getElementById('options'); 
+        op.innerHTML = '';
+        
         q.opts.forEach((opt, i) => {
-            const d = document.createElement('div'); d.className='opt'; d.innerText=opt.t;
-           d.onclick = () => {
-    if (opt.cat) {
-        // 使用空格拆分字符串，并为每个属性分别加分
-        const cats = opt.cat.split(' ');
-        cats.forEach(c => {
-            if (c) { // 确保字符不为空
-                counts[c] = (counts[c] || 0) + 1;
-            }
+            const d = document.createElement('div'); 
+            d.className='opt'; 
+            d.innerText = opt.t;
+            d.onclick = () => {
+                if (opt.cat) {
+                    const cats = opt.cat.split(' ');
+                    cats.forEach(c => {
+                        if (c) counts[c] = (counts[c] || 0) + 1;
+                    });
+                }
+                if (opt.isCorrect) kNum++;
+                if (opt.isMustNfb) nfbMustCount++;
+                idx++; 
+                render();
+            };
+            op.appendChild(d); // 
         });
-    }
-    
-    if (opt.isCorrect) kNum++;
-    if (opt.isMustNfb) nfbMustCount++;
-    idx++; 
-    render();
-};
-    }
+    } // 
 
     function showRes() {
     // 隐藏题目界面，显示结果界面
